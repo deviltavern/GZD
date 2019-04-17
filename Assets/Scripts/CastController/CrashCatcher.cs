@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CrashCatcher : MonoBehaviour, IObviewer,IViewer
+public class CrashCatcher : MonoBehaviour, IViewer
 {
     public static CrashCatcher Instance;
 

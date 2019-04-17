@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraRotation : MonoBehaviour {
+public class CameraRotation : MonoBehaviour ,IViewer {
 
 
     public GameObject cameraFocus;
@@ -49,28 +49,28 @@ public class CameraRotation : MonoBehaviour {
 
 
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-
-           
-
-            
-            if (index % 2 == 0)
-            {
-
-                allowCameraRotation = true;
-            }
-            else
-            {
-
-                allowCameraRotation = false;
-                MainCameraManager.mainCamera.transform.position = initPosition;
-                MainCameraManager.mainCamera.transform.eulerAngles = initEuler;
-            }
-            index++;
-        
-            
-        }
+     // if (Input.GetKeyDown(KeyCode.R))
+     // {
+     //
+     //    
+     //
+     //     
+     //     if (index % 2 == 0)
+     //     {
+     //
+     //         allowCameraRotation = true;
+     //     }
+     //     else
+     //     {
+     //
+     //         allowCameraRotation = false;
+     //         MainCameraManager.mainCamera.transform.position = initPosition;
+     //         MainCameraManager.mainCamera.transform.eulerAngles = initEuler;
+     //     }
+     //     index++;
+     // 
+     //     
+     // }
 
         if (allowCameraRotation == true)
         {
@@ -131,4 +131,23 @@ public class CameraRotation : MonoBehaviour {
         Debug.Log(Input.mouseScrollDelta);
     }
 
+    public void update(ViewInfo info)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void addViewer(IViewer view)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void deleteViewer(IViewer view)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void broadCast(ViewInfo info)
+    {
+        throw new System.NotImplementedException();
+    }
 }

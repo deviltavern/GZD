@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CastTest : MonoBehaviour,IObviewer {
-
+public class CastTest : MonoBehaviour,IViewer {
+    public void update(ViewInfo info)
+    {
+        throw new System.NotImplementedException();
+    }
 
     void Awake()
     {
@@ -15,20 +18,4 @@ public class CastTest : MonoBehaviour,IObviewer {
 
 
 
-
-
-    public void addViewer(IViewer view)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void deleteViewer(IViewer view)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void broadCast(ViewInfo info)
-    {
-        throw new System.NotImplementedException();
-    }
 }

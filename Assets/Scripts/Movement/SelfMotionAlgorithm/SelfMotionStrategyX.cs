@@ -35,14 +35,17 @@ public class SelfMotionStrategyX : Strategy {
 
         Vector3 j1DirStandard = getStandardVec(RobotA.Instance.axleDic[AxleName.J1].transform.position) - g.transform.position;
 
+
         float dis = Vector3.Distance(j1DirStandard / 2, new Vector3());
+        Offset.Instance.viewOffset1 = dis;
+
         // Vector3 j1DirCross = Vector3.Normalize(Vector3.Cross(j1DirStandard, BasePositiveDir));
 
         Vector3 j1DirCross = -Vector3.Normalize(Vector3.Cross(j1DirStandard, j2ToJ3Dir));
         j1DirCross = j1DirCross = Vector3.Normalize(Vector3.Cross(j1DirStandard, j1DirCross));
 
 
-        Vector3 j2AimPoint = j1DirStandard / 2 + g.transform.position + j1DirCross * Mathf.Sqrt((j2Len * j2Len - (dis / 2) * (dis / 2)));
+        Vector3 j2AimPoint = j1DirStandard / 2 + g.transform.position + j1DirCross *( Mathf.Sqrt((j2Len * j2Len - (dis / 2) * (dis / 2))*(1+Offset.Instance.offset2))+Offset.Instance.offset+(2.878f- dis));
 
         Vector3 j2ToJ2AimPoint = j2AimPoint - RobotA.Instance.axleDic[AxleName.J2].transform.position;
 
@@ -83,6 +86,65 @@ public class SelfMotionStrategyX : Strategy {
 
 
     }
+
+    public void changeJ2Value(float offset)
+    {
+
+        Vector3 BasePositiveDir = new Vector3(1, 0, 0);
+
+        Vector3 j2ToJ3Dir = RobotA.Instance.axleDic[AxleName.J3].transform.position - RobotA.Instance.axleDic[AxleName.J2].transform.position;
+
+        Vector3 j1DirStandard = getStandardVec(RobotA.Instance.axleDic[AxleName.J1].transform.position) - g.transform.position;
+
+        float dis = Vector3.Distance(j1DirStandard / 2, new Vector3());
+        // Vector3 j1DirCross = Vector3.Normalize(Vector3.Cross(j1DirStandard, BasePositiveDir));
+
+        Vector3 j1DirCross = -Vector3.Normalize(Vector3.Cross(j1DirStandard, j2ToJ3Dir));
+        j1DirCross = j1DirCross = Vector3.Normalize(Vector3.Cross(j1DirStandard, j1DirCross));
+
+
+        Vector3 j2AimPoint = j1DirStandard / 2 + g.transform.position + j1DirCross * Mathf.Sqrt((j2Len * j2Len - (dis / 2) * (dis / 2)));
+
+        Vector3 j2ToJ2AimPoint = j2AimPoint - RobotA.Instance.axleDic[AxleName.J2].transform.position;
+
+
+
+        float Angle = Vector3.Angle(j2ToJ2AimPoint, j2ToJ3Dir);
+
+        if ((Angle - 1) < 0.1f)
+        {
+            Debug.Log("低头完成！");
+            return;
+        }
+
+        //
+        RobotA.Instance.axleDic[AxleName.J2].transform.localEulerAngles += new Vector3(0, 0, 0.1f);
+
+        j2ToJ2AimPoint = j2AimPoint - RobotA.Instance.axleDic[AxleName.J2].transform.position;
+
+        j2ToJ3Dir = RobotA.Instance.axleDic[AxleName.J3].transform.position - RobotA.Instance.axleDic[AxleName.J2].transform.position;
+        float Angle2 = Vector3.Angle(j2ToJ2AimPoint, j2ToJ3Dir);
+
+
+
+
+        if (Angle2 > Angle)
+        {
+            Debug.Log("不符合规则！");
+            RobotA.Instance.axleDic[AxleName.J2].transform.localEulerAngles -= new Vector3(0, 0, 0.2f);
+
+
+            Debug.Log(Angle2 + ":" + Angle);
+        }
+        else
+        {
+            Debug.Log("符合规则！");
+
+        }
+
+
+    }
+
 
     public void changeJ3Value()
     {
