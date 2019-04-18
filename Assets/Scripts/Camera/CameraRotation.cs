@@ -76,39 +76,6 @@ public class CameraRotation : MonoBehaviour ,IViewer {
         {
 
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                bool isHit = Physics.Raycast(ray, out hit);
-                Debug.Log("选中物体！");
-                if (isHit == true)
-                {
-
-                    if (lastObject != null)
-                    {
-                        lastObject.GetComponent<MeshRenderer>().material.color = lastColor;
-                        
-
-                    }
-                    Debug.Log("选中物体！");
-                    cameraFocus.transform.SetParent(hit.collider.transform);
-                    cameraFocus.transform.localPosition = new Vector3();
-                    cameraFocus.transform.SetParent(null);
-
-                    aimItem = hit.collider.gameObject;
-
-                    lastObject = aimItem;
-                    lastColor = aimItem.GetComponent<MeshRenderer>().material.color;
-
-                       
-                    aimItem.GetComponent<MeshRenderer>().material.color = color;
-
-
-                  
-                    
-                }
-            }
             cameraFocus.transform.eulerAngles += new Vector3(0,Input.mouseScrollDelta.y*10,0);
             cameraPoint.transform.SetParent(null);
             cameraPoint.transform.SetParent(cameraFocus.transform);
@@ -133,21 +100,16 @@ public class CameraRotation : MonoBehaviour ,IViewer {
 
     public void update(ViewInfo info)
     {
-        throw new System.NotImplementedException();
+        cameraFocus.transform.SetParent(info.aimObje.transform);
+        cameraFocus.transform.localPosition = new Vector3();
+        cameraFocus.transform.SetParent(null);
+
+        aimItem = info.aimObje.gameObject;
+
+        lastObject = aimItem;
+     
+        allowCameraRotation = true;
+        
     }
 
-    public void addViewer(IViewer view)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void deleteViewer(IViewer view)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void broadCast(ViewInfo info)
-    {
-        throw new System.NotImplementedException();
-    }
 }

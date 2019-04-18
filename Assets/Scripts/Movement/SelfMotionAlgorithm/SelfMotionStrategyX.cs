@@ -12,18 +12,43 @@ public class SelfMotionStrategyX : Strategy {
     Vector3 aimRoEulerJ1;
     Quaternion aimRoJ1;
     float speed;
+    int frameTimej1 = 0;
+
+    int frameTimej2 = 0;
+    int frameTimej3 = 0;
+    float J2PreAngle = 0;
+    float J2LastAngle = 0;
 
 
+    float J3PreAngle = 0;
+    float J3LastAngle = 0;
+
+    float J5PreAngle = 0;
+    float J5LastAngle = 0;
+    Dictionary<string, bool> overDic = new Dictionary<string, bool>();
     public GameObject g;
     public SelfMotionStrategyX(GameObject _g)
     {
         j2Len = 3.75f;
         g = _g;
-        speed = 10;
+        speed = 4;
+        overDic.Add(AxleName.J2, false);
+        overDic.Add(AxleName.J3, false);
+        overDic.Add(AxleName.J5, false);
+
+        Debug.Log("生成运动策略");
+
+        
     }
     public static Vector3 getStandardVec(Vector3 input)
     {
         return new Vector3(input.x, 0, input.z);
+
+    }
+
+    public int getPlus1000Value(float value)
+    {
+        return (int)(value * 1000);
 
     }
     public void changeJ2Value()
@@ -49,15 +74,34 @@ public class SelfMotionStrategyX : Strategy {
 
         Vector3 j2ToJ2AimPoint = j2AimPoint - RobotA.Instance.axleDic[AxleName.J2].transform.position;
 
+      
 
+       
 
         float Angle = Vector3.Angle(j2ToJ2AimPoint, j2ToJ3Dir);
+       
 
-        if ((Angle - 1) < 0.1f)
+        if (frameTimej1 > 5)
         {
-            Debug.Log("低头完成！");
-            return;
+            frameTimej1 = 0;
+           
+            if (getPlus1000Value(J2LastAngle) == getPlus1000Value(Angle))
+            {
+                overDic[AxleName.J2] = true;
+            }
+
+            J2LastAngle = Angle;
         }
+
+        MovementStatus.Instance.J2 = (Angle);
+
+        
+
+   //   if ((Angle) < 2f)
+   //   {
+   //       overDic[AxleName.J2] = true;
+   //       return;
+   //   }
 
         //
         RobotA.Instance.axleDic[AxleName.J2].transform.localEulerAngles += new Vector3(0, 0, 0.1f);
@@ -76,7 +120,7 @@ public class SelfMotionStrategyX : Strategy {
             RobotA.Instance.axleDic[AxleName.J2].transform.localEulerAngles -= new Vector3(0, 0, 0.2f);
 
 
-            Debug.Log(Angle2 + ":" + Angle);
+
         }
         else
         {
@@ -87,65 +131,7 @@ public class SelfMotionStrategyX : Strategy {
 
     }
 
-    public void changeJ2Value(float offset)
-    {
-
-        Vector3 BasePositiveDir = new Vector3(1, 0, 0);
-
-        Vector3 j2ToJ3Dir = RobotA.Instance.axleDic[AxleName.J3].transform.position - RobotA.Instance.axleDic[AxleName.J2].transform.position;
-
-        Vector3 j1DirStandard = getStandardVec(RobotA.Instance.axleDic[AxleName.J1].transform.position) - g.transform.position;
-
-        float dis = Vector3.Distance(j1DirStandard / 2, new Vector3());
-        // Vector3 j1DirCross = Vector3.Normalize(Vector3.Cross(j1DirStandard, BasePositiveDir));
-
-        Vector3 j1DirCross = -Vector3.Normalize(Vector3.Cross(j1DirStandard, j2ToJ3Dir));
-        j1DirCross = j1DirCross = Vector3.Normalize(Vector3.Cross(j1DirStandard, j1DirCross));
-
-
-        Vector3 j2AimPoint = j1DirStandard / 2 + g.transform.position + j1DirCross * Mathf.Sqrt((j2Len * j2Len - (dis / 2) * (dis / 2)));
-
-        Vector3 j2ToJ2AimPoint = j2AimPoint - RobotA.Instance.axleDic[AxleName.J2].transform.position;
-
-
-
-        float Angle = Vector3.Angle(j2ToJ2AimPoint, j2ToJ3Dir);
-
-        if ((Angle - 1) < 0.1f)
-        {
-            Debug.Log("低头完成！");
-            return;
-        }
-
-        //
-        RobotA.Instance.axleDic[AxleName.J2].transform.localEulerAngles += new Vector3(0, 0, 0.1f);
-
-        j2ToJ2AimPoint = j2AimPoint - RobotA.Instance.axleDic[AxleName.J2].transform.position;
-
-        j2ToJ3Dir = RobotA.Instance.axleDic[AxleName.J3].transform.position - RobotA.Instance.axleDic[AxleName.J2].transform.position;
-        float Angle2 = Vector3.Angle(j2ToJ2AimPoint, j2ToJ3Dir);
-
-
-
-
-        if (Angle2 > Angle)
-        {
-            Debug.Log("不符合规则！");
-            RobotA.Instance.axleDic[AxleName.J2].transform.localEulerAngles -= new Vector3(0, 0, 0.2f);
-
-
-            Debug.Log(Angle2 + ":" + Angle);
-        }
-        else
-        {
-            Debug.Log("符合规则！");
-
-        }
-
-
-    }
-
-
+   
     public void changeJ3Value()
     {
 
@@ -153,12 +139,25 @@ public class SelfMotionStrategyX : Strategy {
 
         Vector3 j3Toj5Dir = RobotA.Instance.axleDic[AxleName.J5].transform.position - RobotA.Instance.axleDic[AxleName.J3].transform.position;
         float Angle = Vector3.Angle(-j3Dir2GHead, j3Toj5Dir);
+        MovementStatus.Instance.J3 = (Angle);
+        //  if ((Angle) < 2f)
+        //  {
+        //      overDic[AxleName.J3] = true;
+        //     
+        //      return;
+        //  }
 
-        if ((Angle - 3) < 0.1f)
+        if (frameTimej2 > 5)
         {
-            return;
-        }
+            frameTimej2 = 0;
 
+            if (getPlus1000Value(J3LastAngle) == getPlus1000Value(Angle))
+            {
+                overDic[AxleName.J3] = true;
+            }
+
+            J3LastAngle = Angle;
+        }
 
         RobotA.Instance.axleDic[AxleName.J3].transform.localEulerAngles += new Vector3(0, 0, 0.1f);
 
@@ -195,11 +194,27 @@ public class SelfMotionStrategyX : Strategy {
 
         Vector3 j5Toj6Dir = RobotA.Instance.axleDic[AxleName.J6].transform.position - RobotA.Instance.axleDic[AxleName.J5].transform.position;
         float Angle = Vector3.Angle(-j5Dir, j5Toj6Dir);
+        MovementStatus.Instance.J5 = (Angle);
 
-        if ((Angle - 3) < 0.1f)
+
+
+        if (frameTimej3 > 5)
         {
-            return;
+            frameTimej3 = 0;
+
+            if (getPlus1000Value(J5LastAngle) == getPlus1000Value(Angle))
+            {
+                overDic[AxleName.J5] = true;
+            }
+
+            J5LastAngle = Angle;
         }
+
+        //    if ((Angle) < 9f)
+        //    {
+        //        overDic[AxleName.J5] = true;
+        //        return;
+        //    }
 
 
         RobotA.Instance.axleDic[AxleName.J5].transform.localEulerAngles -= new Vector3(0, 0, 0.1f);
@@ -272,7 +287,7 @@ public class SelfMotionStrategyX : Strategy {
 
     public bool nextStepContition(Vector3 aimRo, Vector3 onTimeRo)
     {
-         Debug.Log(Mathf.Abs(Vector3.Distance(aimRo, onTimeRo)));
+
          if (Mathf.Abs(Vector3.Distance(aimRo, onTimeRo)) < 1 || Mathf.Abs((Mathf.Abs(Vector3.Distance(aimRo, onTimeRo)) - 360)) < 1)
         {
 
@@ -286,12 +301,31 @@ public class SelfMotionStrategyX : Strategy {
 
 
     }
+    public bool endStrategy()
+    {
+        bool isEnd = true;
 
+        foreach (bool value in overDic.Values)
+        {
+            if (value == false)
+            {
+                isEnd = false;
+                break;
+            }
+               
+        }
+
+        return isEnd;
+    }
     public override void doSomthing()
     {
 
-        Debug.Log("策略码：" + code);
+        Debug.Log("是否结束：" + endStrategy()+"code = "+code);
         onTimeJ1 = RobotA.Instance.axleDic[AxleName.J1].transform.localEulerAngles;
+
+        frameTimej1++;
+        frameTimej2++;
+        frameTimej3++;
         switch (code)
         { 
             case 0:
@@ -312,8 +346,7 @@ public class SelfMotionStrategyX : Strategy {
 
             case 2:
                 changeJ2Value();
-                Debug.Log("执行第二次策略！");
-
+                
                 changeJ3Value();
                 changeJ5Value();
                 break;
@@ -327,6 +360,6 @@ public class SelfMotionStrategyX : Strategy {
 
     public override void waitting()
     {
-        throw new System.NotImplementedException();
+       
     }
 }

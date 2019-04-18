@@ -42,6 +42,14 @@ public class ResourcesManager : MonoBehaviour {
         }
     }
 
+    public void load(string key)
+    {
+        prefabDic.Add(key, Resources.Load<GameObject>(key));
+
+
+
+    }
+
     public void save2SpDic(string key)
     {
 
@@ -59,9 +67,13 @@ public class ResourcesManager : MonoBehaviour {
         save2PrefabDic(ResName.layerItem, Resources.Load<GameObject>(ResName.layerItem));
         //save2SpDic(ResName.hammer);
 
-        
+        load(ResName.shapeDataItem);
+
+
         save2MaterialDic(AxleColor, Resources.Load<Material>(AxleColor));
-        
+        save2MaterialDic(ResName.AimPointMateril, Resources.Load<Material>(ResName.AimPointMateril));
+
+        save2MaterialDic(ResName.OnGetOriginMateril, Resources.Load<Material>(ResName.OnGetOriginMateril));
 
         setRGB(	255,222 ,173);
         setRGB(84, 255 ,159);

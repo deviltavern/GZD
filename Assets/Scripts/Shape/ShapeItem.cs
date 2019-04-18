@@ -6,12 +6,12 @@ public class ShapeItem : MonoBehaviour {
 
 
 
-
+    
     MeshRenderer mesh;
     public Color defaultColor;
     public Color dynamicColor;
     public static Color changeColor = new Color(238 / 255f, 59 / 255f, 59 / 255f);
-    public string id;
+    public string id { get; set; }
     void Awake()
     {
 
@@ -33,6 +33,7 @@ public class ShapeItem : MonoBehaviour {
         {
             dynamicColor = changeColor;
             ShapeItemCatcher.addShapeItem(this.id);
+            
 
 
         }

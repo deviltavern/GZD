@@ -6,14 +6,21 @@ using UnityEngine.UI;
 public class ShapeAreaAction : MonoBehaviour {
 
 	// Use this for initialization
-    int width;
-    int len;
-    int height;
+   public int width;
+   public int len;
+   public int height;
     ShapeAreaPage page;
-    public Dictionary<string, GameObject> insShapeItemDic = new Dictionary<string, GameObject>();
-	void Start () {
-        page = ShapeAreaPage.Instance;
+    public static ShapeAreaAction Instance;
+    Transform DSParent;
+    public static Dictionary<string, GameObject> insShapeItemDic = new Dictionary<string, GameObject>();
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+    void Start () {
+        page = ShapeAreaPage.Instance;
+        DSParent = GameObject.Find("DSParent").transform;
         page.insBtn.onClick.AddListener(OnClickInsBtn);
         spaceDistanc = 1.2f;
 
@@ -28,6 +35,7 @@ public class ShapeAreaAction : MonoBehaviour {
         g.GetComponent<MeshRenderer>().material.color = color;
         page.layerList[h].addLayerItem(id, g);
         g.GetComponent<ShapeItem>().id = id;
+        g.transform.SetParent(DSParent);
 
     }
     public void OnClickInsBtn() {

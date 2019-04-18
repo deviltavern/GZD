@@ -5,14 +5,23 @@ using UnityEngine;
 public class SelfMotionManager : MonoBehaviour {
 
 
-    public SelfMotionStrategyX selfMotionStrategy;
+    public static SelfMotionStrategyX selfMotionStrategy;
 
-
+    public static CarryToAimShapeStrategy CarryToAimStrategy;
     Ray ray;
     RaycastHit hit;
+    
+
+
+
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            Debug.Log(OriginObject.originObj+"=="+ InsAimShape.Instance.gList.Count);
 
+            CarryToAimStrategy = new CarryToAimShapeStrategy(OriginObject.originObj, InsAimShape.Instance.gList);
+        }
         if (Input.GetKey(KeyCode.Z))
         {
 
@@ -41,7 +50,11 @@ public class SelfMotionManager : MonoBehaviour {
             Debug.Log("执行策略！");
             selfMotionStrategy.doSomthing();
         }
-    
+
+        if (CarryToAimStrategy != null)
+        {
+            CarryToAimStrategy.doSomthing();
+        }
     }
 
 
