@@ -1,0 +1,53 @@
+<page>
+  <cp_ProducePage id="cp_ProducePage">
+    <item value="0" />
+  </cp_ProducePage>
+  <cp_lenth id="cp_lenth">
+    <item value="0" />
+  </cp_lenth>
+  <cp_width id="cp_width">
+    <item value="0" />
+  </cp_width>
+  <cp_heigth id="cp_heigth">
+    <item value="0" />
+  </cp_heigth>
+  <cp_weight id="cp_weight">
+    <item value="0" />
+  </cp_weight>
+  <cp_distance id="cp_distance">
+    <item value="0" />
+  </cp_distance>
+  <cp_label id="cp_label">
+    <item value="0" />
+    <item value="1" />
+    <item value="2" />
+  </cp_label>
+  <cb_BlackPage id="cb_BlackPage">
+    <item value="0" />
+  </cb_BlackPage>
+  <cb_lenth id="cb_lenth">
+    <item value="0" />
+  </cb_lenth>
+  <cb_width id="cb_width">
+    <item value="0" />
+  </cb_width>
+  <cb_heigth id="cb_heigth">
+    <item value="0" />
+  </cb_heigth>
+  <cb_weight id="cb_weight">
+    <item value="0" />
+  </cb_weight>
+  <cs_SocketPage id="cs_SocketPage">
+    <item value="0" />
+  </cs_SocketPage>
+  <cs_ip id="cs_ip">
+    <item value="0" />
+  </cs_ip>
+  <cs_port id="cs_port">
+    <item value="0" />
+  </cs_port>
+  <cs_kind id="cs_kind">
+    <item value="1" />
+    <item value="2" />
+  </cs_kind>
+</page>
