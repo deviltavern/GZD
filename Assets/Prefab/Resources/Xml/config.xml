@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Xml>
+	<JD>
+		<Name>节点01</Name>
+		<X>001</X>
+		<Y>002</Y>
+	</JD>
+	<JD>
+		<Name>节点02</Name>
+		<X>003</X>
+		<Y>004</Y>
+	</JD>
+	<JD>
+		<Name>节点03</Name>
+		<X>005</X>
+		<Y>006</Y>
+	</JD>
+</Xml>

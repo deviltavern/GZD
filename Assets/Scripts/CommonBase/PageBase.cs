@@ -13,12 +13,15 @@ public abstract class PageBase : MonoBehaviour {
     {
         setParameter();
         this.GetComponent<RectTransform>().localPosition = initPosition;
-        this.gameObject.SetActive(false);
+       
         dic.Add(this.GetType().Name, this);
 
 
     }
-
+    public void Start()
+    {
+        this.gameObject.SetActive(false);   
+    }
     public abstract void setParameter();
    
 
