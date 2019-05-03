@@ -48,5 +48,12 @@ public abstract class PageBase : MonoBehaviour {
     }
 
 
+    public T findElement<T>(string str) 
+    {
 
+        T a = this.transform.Find(str).GetComponent<T>();
+        return a;
+
+
+    }
 }

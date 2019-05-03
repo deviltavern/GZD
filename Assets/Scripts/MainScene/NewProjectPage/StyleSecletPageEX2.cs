@@ -11,17 +11,23 @@ public class StyleSecletPageEX2 : MonoBehaviour {
 
     public Dropdown dropDown;
 
+
+    public InputField ipInput;
+    public InputField portInput;
+    
     private void Awake()
     {
         ipBtn = this.transform.Find("s_ipBtn").GetComponent<Button>();
         portBtn = this.transform.Find("s_portBtn").GetComponent<Button>();
         kindBtn = this.transform.Find("s_kindBtn").GetComponent<Button>();
         dropDown = this.transform.Find("s_labalDropdown").GetComponent<Dropdown>();
-
-
+        ipInput = this.transform.Find("s_ipInput").GetComponent<InputField>();
+        portInput = this.transform.Find("s_portInput").GetComponent<InputField>();
         ipBtn.onClick.AddListener(onClickIpBtn);
         portBtn.onClick.AddListener(onClickPortBtn);
         kindBtn.onClick.AddListener(onClickKindBtn);
+
+    
 
 
     }
@@ -29,6 +35,9 @@ public class StyleSecletPageEX2 : MonoBehaviour {
     void Start() {
 
         data = ConfigFile.dataDic["cs_kind"];
+        ipInput.text = ConfigFile.dataDic["cs_ip"].getList()[0];
+
+        portInput.text = ConfigFile.dataDic["cs_port"].getList()[0];
 
 
         foreach (string key in data.getList())

@@ -20,6 +20,10 @@ public class MainSceneNewProjectPage : MainScenePage
         socektBoard = this.transform.Find("socektBoard").GetComponent<StyleSecletPageEX2>();
         formButton = this.transform.Find("formButton").GetComponent<StyleSecletPageEX3>();
         Instance = this;
+
+
+
+        
     }
 
 }

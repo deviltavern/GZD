@@ -40,14 +40,34 @@
   <cs_SocketPage id="cs_SocketPage">
     <item value="0" />
   </cs_SocketPage>
+  
+
   <cs_ip id="cs_ip">
-    <item value="0" />
+    <item value="127.0.0.1" />
   </cs_ip>
+  
+
   <cs_port id="cs_port">
-    <item value="0" />
+    <item value="9999" />
   </cs_port>
+	
+  <box_data>
+	 <box_attribute id = "">
+		<width> </width>
+		<len> </len>
+		<height> </height>
+		<width> </width>
+		<info> </info>
+	 </box_attribute>
+  </box_data>
+  
   <cs_kind id="cs_kind">
-    <item value="1" />
-    <item value="2" />
+    <item value="type1" />
+    <item value="type2" />
   </cs_kind>
+  
+  
+  <savePath id="s2">
+	<item value="D:\GZRobot\Setting\" />
+  </savePath>
 </page>

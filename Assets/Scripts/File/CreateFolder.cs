@@ -6,18 +6,50 @@ using UnityEngine.UI;
 
 public class CreateFolder : MonoBehaviour {
 
-    public const string path = "D:\\GZRobot";
+   
 
     public List<string> folderValue = new List<string>();
 
     public Transform fileButtonParent;
 
-   
+    public static List<string> getFolderNameList(string path)
+    {
+
+  
+
+        List<string> tempList = new List<string>();
+        if (!Directory.Exists(path))
+        {
+
+            print("文件夹不存在！");
+        }
+        else
+        {
+            FileInfo[] infoArray = new DirectoryInfo(path).GetFiles();
+            foreach (FileInfo info in infoArray)
+            {
+
+                string value = info.ToString();
+                if (value.Contains(".txt") == true)
+                {
+
+                    tempList.Add(value);
+                }
+
+            }
+           
+
+        }
+        return tempList;
+
+    }
 
     void Awake()
     {
         fileButtonParent = GameObject.Find("Canvas").transform.Find("fileView").transform.Find("Content").gameObject.transform.Find("backGround");
+        string path = ConfigFile.dataDic["savePath"].getList()[0];
 
+        print(path);
         if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);

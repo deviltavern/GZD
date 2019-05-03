@@ -46,7 +46,7 @@ public class ResourcesManager : MonoBehaviour {
     {
         prefabDic.Add(key, Resources.Load<GameObject>(key));
 
-
+        Debug.Log(key);
 
     }
 
@@ -68,6 +68,7 @@ public class ResourcesManager : MonoBehaviour {
         //save2SpDic(ResName.hammer);
 
         load(ResName.shapeDataItem);
+        load(ResName.SettingItem);
 
 
         save2MaterialDic(AxleColor, Resources.Load<Material>(AxleColor));

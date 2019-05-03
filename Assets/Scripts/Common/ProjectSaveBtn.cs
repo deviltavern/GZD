@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 public class ProjectSaveBtn : ButtonEventBase {
 
-    public const string targetPath = "D:\\FData\\setting.txt";
+  
     public InputField bp_lenInput;
     public InputField bp_widthInput;
     public InputField bp_heightInput;
@@ -28,8 +29,10 @@ public class ProjectSaveBtn : ButtonEventBase {
     public InputField s_kindInput; 
   
     public override void onClickButton(){
-    
-        StreamWriter sw = new StreamWriter(targetPath);
+        DateTime date = DateTime.Now;
+
+        string saveName = date.Month + "" + date.Day + "" + date.Hour + "" + date.Minute + "" + ".txt";
+        StreamWriter sw = new StreamWriter(ConfigFile.dataDic["savePath"].getList()[0] + saveName);
         PorjectData data = new PorjectData();
    
    //   data.baseplate_length = 123.333f;

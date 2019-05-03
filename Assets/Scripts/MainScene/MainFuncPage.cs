@@ -67,7 +67,12 @@ public class MainFuncPage : MonoBehaviour {
     public void onClickHistory()
     {
 
-        MainScenePage.stackDic[MainSceneResName.historypageName].showPage();
+       
+
+        MainSceneHistoryPage hisPage = (MainSceneHistoryPage)MainScenePage.stackDic[MainSceneResName.historypageName];
+
+        hisPage.showPage();
+        hisPage.hviewPort.updateViewportInfo();
 
     }
 

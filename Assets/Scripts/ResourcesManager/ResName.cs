@@ -36,6 +36,9 @@ public class ResName : MonoBehaviour {
       public const string s_portInput = "s_portInput";
       public const string s_kindInput = "s_kindInput";
 
-      public const string config = "config"; 
+      public const string config = "config";
+
+
+    public const string SettingItem = "SettingItem";
 
 }

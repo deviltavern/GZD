@@ -56,28 +56,6 @@ public class ConfigFile : MonoBehaviour {
 
     void Awake() {
 
-        //_list = new List<string>();
-
-
-        //_list.Add("cp_ProducePage");
-        //_list.Add("cp_lenth");
-        //_list.Add("cp_width");
-        //_list.Add("cp_heigth");
-        //_list.Add("cp_weight");
-        //_list.Add("cp_distance");
-        //_list.Add("cp_label");
-
-        //_list.Add("cb_BlackPage");
-        //_list.Add("cb_lenth");
-        //_list.Add("cb_width");
-        //_list.Add("cb_heigth");
-        //_list.Add("cb_weight");
-
-        //_list.Add("cs_SocketPage");
-        //_list.Add("cs_ip");
-        //_list.Add("cs_port");
-        //_list.Add("cs_kind");
-        //CreateXML(_list); 
 
         LoadXml();
     
@@ -148,32 +126,9 @@ public class ConfigFile : MonoBehaviour {
         foreach (XmlElement xl1 in xmlNodeList)
         {
 
-            print(xl1.GetAttribute("value"));
+            print("XMLINFO:"+xl1.GetAttribute("value"));
             dataDic.Add(xl1.Name, new ListBaseX(xl1.ChildNodes));
-
-       //if (xl1.GetAttribute("id") == "1")
-       //{
-       //    //继续遍历id为1的节点下的子节点
-       //    foreach (XmlElement xl2 in xl1.ChildNodes)
-       //    {
-       //        //放到一个textlist文本里
-       //        //textList.Add(xl2.GetAttribute("name") + ": " + xl2.InnerText);
-       //        //得到name为a的节点里的内容。放到TextList里
-       // //     if (xl2.GetAttribute("name") == "a")
-       // //     {
-       // //         Adialogue.Add(xl2.GetAttribute("name") + ": " + xl2.InnerText);
-       // //         print("******************"+ xl2.GetAttribute("name") + ": " + xl2.InnerText);
-       // //     }
-       // //     //得到name为b的节点里的内容。放到TextList里
-       // //     else if (xl2.GetAttribute("map") == "abc")
-       // //     {
-       // //         Bdialogue.Add(xl2.GetAttribute("name") + ": " + xl2.InnerText);
-       // //         print("******************" + xl2.GetAttribute("name") + ": " + xl2.InnerText);
-       //
-       //      
-       //      }
-         //       }
-          //  }
+            
         }
 
 
