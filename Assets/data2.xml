@@ -40,34 +40,66 @@
   <cs_SocketPage id="cs_SocketPage">
     <item value="0" />
   </cs_SocketPage>
-  
-
   <cs_ip id="cs_ip">
     <item value="127.0.0.1" />
   </cs_ip>
-  
-
   <cs_port id="cs_port">
     <item value="9999" />
   </cs_port>
-	
-  <box_data>
-	 <box_attribute id = "">
-		<width> </width>
-		<len> </len>
-		<height> </height>
-		<width> </width>
-		<info> </info>
-	 </box_attribute>
-  </box_data>
-  
   <cs_kind id="cs_kind">
     <item value="type1" />
     <item value="type2" />
   </cs_kind>
-  
-  
   <savePath id="s2">
-	<item value="D:\GZRobot\Setting\" />
+    <item value="D:\GZRobot\Setting\" />
   </savePath>
+  <box_type id="box_type">
+    <item value="999" />
+    <item value="bbb" />
+    <item value="ccc" />
+  </box_type>
+  <baseboard_data_all>
+    <baseboard_data>
+      <baseboard_id>1106</baseboard_id>
+      <width>11</width>
+      <len>22</len>
+    </baseboard_data>
+    <baseboard_data>
+      <baseboard_id>123</baseboard_id>
+      <width>6</width>
+      <len>9</len>
+    </baseboard_data>
+  </baseboard_data_all>
+  <box_data_all>
+    <box_data>
+      <box_id>999</box_id>
+      <width>111</width>
+      <height>333</height>
+      <len>222</len>
+    </box_data>
+    <box_data>
+      <box_id>1</box_id>
+      <width>132</width>
+      <height>666</height>
+      <len>666</len>
+    </box_data>
+    <box_data>
+      <box_id>404</box_id>
+      <width>111</width>
+      <height>3333</height>
+      <len>2222</len>
+    </box_data>
+    <box_data>
+      <box_id>315</box_id>
+      <width>3</width>
+      <height>77</height>
+      <len>66</len>
+    </box_data>
+    <box_data>
+      <box_id>800</box_id>
+      <width>2</width>
+      <height>2</height>
+      <len>4</len>
+    </box_data>
+  </box_data_all>
 </page>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ConfigFile : MonoBehaviour {
 
@@ -58,7 +59,9 @@ public class ConfigFile : MonoBehaviour {
 
 
         LoadXml();
-    
+
+   
+
     
     
     
@@ -66,7 +69,7 @@ public class ConfigFile : MonoBehaviour {
     }
     void Start () {
 
- 
+      //  updateXML();
 
 
 
@@ -116,6 +119,8 @@ public class ConfigFile : MonoBehaviour {
    public static Dictionary<string, ListBaseX> dataDic = new Dictionary<string, ListBaseX>();
     void LoadXml()
     {
+
+        dataDic.Clear();
         //创建xml文档
         XmlDocument xml = new XmlDocument();
 
@@ -126,9 +131,30 @@ public class ConfigFile : MonoBehaviour {
         foreach (XmlElement xl1 in xmlNodeList)
         {
 
-            print("XMLINFO:"+xl1.GetAttribute("value"));
-            dataDic.Add(xl1.Name, new ListBaseX(xl1.ChildNodes));
-            
+
+            switch (xl1.Name)
+            { 
+                case "box_data_all":
+
+                    BoxData.getData(xl1.ChildNodes);
+
+
+                    break;
+
+                case "baseboard_data_all":
+
+                    BaseboardData.getData(xl1.ChildNodes);
+
+
+                    break;
+
+                default:
+                    dataDic.Add(xl1.Name, new ListBaseX(xl1.ChildNodes));
+                     
+                    break;
+            }
+               
+         
         }
 
 
@@ -138,7 +164,7 @@ public class ConfigFile : MonoBehaviour {
 
             foreach (string value in dataDic[key].getList())
             {
-                print(key + "--" + value);
+
             }
 
         }
@@ -146,40 +172,79 @@ public class ConfigFile : MonoBehaviour {
     }
 
 
-    //修改
-    void updateXML()
+    //修改BaseBoardData
+   public static void updateBaseboardDataInXML(int width,int len,int typeBaseboard)
     {
         string path = Application.dataPath + "/data2.xml";
+        print(path);
         if (File.Exists(path))
         {
             XmlDocument xml = new XmlDocument();
             xml.Load(path);
-            XmlNodeList xmlNodeList = xml.SelectSingleNode("objects").ChildNodes;
-            foreach (XmlElement xl1 in xmlNodeList)
-            {
-                if (xl1.GetAttribute("id") == "1")
-                {
-                    //把messages里id为1的属性改为5
-                    xl1.SetAttribute("id", "5");
-                }
+           XmlNode root= xml.SelectSingleNode("page");
+           XmlNode BoxNode = root.SelectSingleNode("baseboard_data_all");
+           
+                XmlElement element = xml.CreateElement("baseboard_data");
 
-                if (xl1.GetAttribute("id") == "2")
-                {
-                    foreach (XmlElement xl2 in xl1.ChildNodes)
-                    {
-                        if (xl2.GetAttribute("map") == "abc")
-                        {
-                            //把mission里map为abc的属性改为df，并修改其里面的内容
-                            xl2.SetAttribute("map", "df");
-                            xl2.InnerText = "我成功改变了你";
-                        }
+                XmlElement elementChild1 = xml.CreateElement("baseboard_id");
+                elementChild1.InnerText = "" + typeBaseboard;
+                
+                XmlElement elementChild11 = xml.CreateElement("width");
+                elementChild11.InnerText = ""+width;
+                XmlElement elementChild12 = xml.CreateElement("len");
+                elementChild12.InnerText = "" + len;
+      
+                //把节点一层一层的添加至xml中，注意他们之间的先后顺序，这是生成XML文件的顺序
+                 element.AppendChild(elementChild1);
+                 element.AppendChild(elementChild11);
+                 element.AppendChild(elementChild12);
 
-                    }
-                }
-            }
+            BoxNode.AppendChild(element);
+            xml.AppendChild(root);
+                //最后保存文件
+
             xml.Save(path);
         }
     }
+   public static void updateBoxDataInXML(int width, int len, int height, int Typenum)
+   {
+       string path = Application.dataPath + "/data2.xml";
+       if (File.Exists(path))
+       {
+           XmlDocument xml = new XmlDocument();
+           xml.Load(path);
+           XmlNode root = xml.SelectSingleNode("page");
+           XmlNode BoxNode = root.SelectSingleNode("box_data_all");
+
+           XmlElement element = xml.CreateElement("box_data");
+
+           XmlElement elementChild1 = xml.CreateElement("box_id");
+           elementChild1.InnerText = "" + Typenum;
+
+           XmlElement elementChild11 = xml.CreateElement("width");
+           elementChild11.InnerText = "" + width;
+           XmlElement elementChild12 = xml.CreateElement("height");
+           elementChild12.InnerText = "" + height;
+           XmlElement elementChild13 = xml.CreateElement("len");
+           elementChild13.InnerText = "" + len;
+
+
+
+
+
+           //把节点一层一层的添加至xml中，注意他们之间的先后顺序，这是生成XML文件的顺序
+           element.AppendChild(elementChild1);
+           element.AppendChild(elementChild11);
+           element.AppendChild(elementChild12);
+           element.AppendChild(elementChild13);
+
+           BoxNode.AppendChild(element);
+           xml.AppendChild(root);
+           //最后保存文件
+
+           xml.Save(path);
+       }
+   }
 
     //添加XML
     void addXMLData()

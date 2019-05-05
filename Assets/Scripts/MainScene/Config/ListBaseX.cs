@@ -6,7 +6,10 @@ using UnityEngine;
 public class ListBaseX  {
 
     private List<string> _list = new List<string>();
-
+    public ListBaseX()
+    { 
+    
+    }
 
     public ListBaseX(XmlNodeList data)
     {

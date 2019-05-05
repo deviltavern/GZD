@@ -23,18 +23,20 @@ public class MainFuncPage : MonoBehaviour {
         history.onClick.AddListener(onClickHistory);
         custom.onClick.AddListener(onClickCustom);
         simulink.onClick.AddListener(onClickSimulink);
-
+   
 
     }
 
     private void Start() {
         foreach (string key in MainScenePage.stackDic.Keys)
         {
-            print(key);
+
         }
     }
     public Dropdown dType;
     public Dropdown dLabel;
+    public Dropdown Box_Type;
+    public Dropdown Baseboard_Type;
     public void onClickNewProject()
     {
 
@@ -58,10 +60,6 @@ public class MainFuncPage : MonoBehaviour {
 
         Debug.Log("123");
 
-
-
-
-
     }
 
     public void onClickHistory()
@@ -79,6 +77,40 @@ public class MainFuncPage : MonoBehaviour {
     public void onClickCustom()
     {
         MainScenePage.stackDic[MainSceneResName.custompageName].showPage();
+        //****************
+        MainSceneCustomPage page = (MainSceneCustomPage)MainScenePage.stackDic["MainSceneCustomPage"];
+      
+        //找到下拉框资源
+        Box_Type = page.box_Dropdown;
+        Baseboard_Type = page.baseboard_Dropdown;
+        //在存列表的字典中，找到在config文件中的“下拉框”子节点对应列表；
+
+        List<string> Box_tempList = new List<string>();
+        List<string> Baseboard_tempList = new List<string>();
+        Box_tempList.Add("请选择Box");
+        Baseboard_tempList.Add("请选择Baseboard");
+
+
+        foreach (BoxData element in BoxData.dic.Values)
+        {
+            Box_tempList.Add(element.id);
+        }
+        foreach (BaseboardData element in BaseboardData.Baseboard_dic.Values)
+        {
+            Baseboard_tempList.Add(element.id);
+        }
+       
+        //清除option，添加option
+        Box_Type.options.Clear();
+        Box_Type.AddOptions(Box_tempList);
+        Baseboard_Type.options.Clear();
+        Baseboard_Type.AddOptions(Baseboard_tempList);
+
+
+        Debug.Log("9999999999999999999999999999999");
+
+
+
     }
 
     public void onClickSimulink()
