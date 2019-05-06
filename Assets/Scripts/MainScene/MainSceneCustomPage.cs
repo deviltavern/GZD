@@ -25,6 +25,7 @@ public class MainSceneCustomPage : MainScenePage
     public Button customSingleLayer;
     public Button customBoxType;
 
+    public Button simulinkBtn;
 
     public Dropdown stacking_type;
 
@@ -55,7 +56,9 @@ public class MainSceneCustomPage : MainScenePage
 
         stacking_type.ClearOptions();
 
-         CreateFolder.getFolderNameList("D:\\GZRobot\\Shape",out stacking_type_value);
+
+        simulinkBtn = findElement<Button>("simulink");
+        CreateFolder.getFolderNameList("D:\\GZRobot\\Shape",out stacking_type_value);
 
 
         this.stacking_type.AddOptions(stacking_type_value);
