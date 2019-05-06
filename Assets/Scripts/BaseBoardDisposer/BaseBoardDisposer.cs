@@ -35,6 +35,16 @@ public class BaseBoardDisposer : MonoBehaviour {
 
     }
 
+    public void changeWL(BoxData data)
+    {
+        foreach (GameObject G in insShapeItemList) {
+            G.GetComponent<MeshRenderer>().material = ResourcesManager.materialDic[data.materialsType];
+        }
+
+
+
+    }
+
     public void insShape(ShapeData data)
     {
         clearShape();
@@ -46,6 +56,8 @@ public class BaseBoardDisposer : MonoBehaviour {
 
             G.transform.SetParent(insParent);
             G.transform.localPosition = itemData.getVector3();
+
+            
             insShapeItemList.Add(G);
 
 

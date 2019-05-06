@@ -76,30 +76,25 @@
       <width>111</width>
       <height>333</height>
       <len>222</len>
+	  <materials_type>wl_jzx_001</materials_type>
     </box_data>
-    <box_data>
-      <box_id>1</box_id>
-      <width>132</width>
-      <height>666</height>
-      <len>666</len>
-    </box_data>
+
     <box_data>
       <box_id>404</box_id>
       <width>111</width>
       <height>3333</height>
       <len>2222</len>
+	  <materials_type>wl_jzx_002</materials_type>
     </box_data>
+	
+	
     <box_data>
       <box_id>315</box_id>
       <width>3</width>
       <height>77</height>
       <len>66</len>
+	  <materials_type>wl_jzx_003</materials_type>
     </box_data>
-    <box_data>
-      <box_id>800</box_id>
-      <width>2</width>
-      <height>2</height>
-      <len>4</len>
-    </box_data>
+
   </box_data_all>
 </page>
