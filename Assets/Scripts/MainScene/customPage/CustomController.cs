@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CustomController : MonoBehaviour
@@ -13,6 +14,9 @@ public class CustomController : MonoBehaviour
     MainSceneCustomPage page;
     string pressCity;
     string pressBaseboard;
+
+
+    Dictionary<string, ShapeData> shapeDic = new Dictionary<string, ShapeData>();
     private void Start()
     {
 
@@ -27,8 +31,55 @@ public class CustomController : MonoBehaviour
 
         page.box_Dropdown.onValueChanged.AddListener(delegate { onChangeBoxDropdown(); });
         page.baseboard_Dropdown.onValueChanged.AddListener(delegate { onChangeBaseboardDropdown(); });
+
+
+
+        page.stacking_type.onValueChanged.AddListener(delegate { onClickStackType(); });
+
+        List<string> list;
+        List<string> pathList = CreateFolder.getFolderNameList("D:\\GZRobot\\Shape", out list);
+
+        for (int i = 0; i < list.Count; i++)
+
+        {
+            
+            shapeDic.Add(list[i],new ShapeData(CreateFolder.getFileContent(pathList[i])));
+        }
+
+
+        page.customShape.onClick.AddListener(onClickcustomShape);
+        page.customBaseBoard.onClick.AddListener(onClickcustomBaseBoard);
+        page.customSingleLayer.onClick.AddListener(onClickcustomSingleLayer);
+        page.customBoxType.onClick.AddListener(onClickcustomBoxType);
+
     }
 
+
+  public void onClickcustomShape() {
+        SceneManager.LoadScene("InsShape");
+
+
+    }
+  public void onClickcustomBaseBoard (){
+               
+    }          
+  public void onClickcustomSingleLayer() {
+               
+    }          
+  public void onClickcustomBoxType()
+    {
+
+
+    }
+    public void onClickStackType()
+    {
+        Debug.Log("点击了堆类型！"+ shapeDic.Count);
+        
+        BaseBoardDisposer.Instance.insShape(shapeDic[page.stacking_type_value[page.stacking_type.value]]);
+
+        
+
+    }
     public void onClickCreateBtn()
     {
         page.saveBtn.interactable = true;
@@ -51,6 +102,9 @@ public class CustomController : MonoBehaviour
         page.saveBtn.interactable = false;
         page.createBtn.interactable = true;
     }
+
+
+
     public void onChangeBaseboardDropdown()
     {
         pressBaseboard = page.baseboard_Dropdown.options[page.baseboard_Dropdown.value].text;
@@ -66,6 +120,7 @@ public class CustomController : MonoBehaviour
                     page.baseboard_len.text = BaseboardData.Baseboard_dic[pressBaseboard].len + "";
                     page.baseboard_width.text = BaseboardData.Baseboard_dic[pressBaseboard].width + "";
                     page.baseboard_typeNum.text = BaseboardData.Baseboard_dic[pressBaseboard].id + "";
+                    BaseBoardDisposer.Instance.changeValue(BaseboardData.Baseboard_dic[pressBaseboard].width, BaseboardData.Baseboard_dic[pressBaseboard].len);
 
                 }
             }
@@ -88,17 +143,12 @@ public class CustomController : MonoBehaviour
 
         if (page.box_Dropdown.value != 0)
         {
-
-            foreach (BoxData element in BoxData.dic.Values)
-            {
-                if (element.id == pressCity)
-                {
+           
                     page.box_x.text = BoxData.dic[pressCity].width + "";
                     page.box_y.text = BoxData.dic[pressCity].height + "";
                     page.box_z.text = BoxData.dic[pressCity].len + "";
                     page.box_typeNum.text = BoxData.dic[pressCity].id;
-                }
-            }
+          
         }
         else
         {

@@ -20,6 +20,16 @@ public class MainSceneCustomPage : MainScenePage
    public static MainSceneCustomPage Instance;
 
 
+    public Button customShape;
+    public Button customBaseBoard;
+    public Button customSingleLayer;
+    public Button customBoxType;
+
+
+    public Dropdown stacking_type;
+
+    public List<string> stacking_type_value;
+
 /// <summary>
 /// MVC模式下的   View
 /// </summary>
@@ -36,10 +46,24 @@ public class MainSceneCustomPage : MainScenePage
         baseboard_typeNum = findElement<InputField>("baseboard_typeNum");
         saveBtn = findElement<Button>("saveBtn");
         createBtn = findElement<Button>("createBtn");
+        stacking_type = this.transform.Find("stacking_type").GetComponent<Dropdown>();
+
+        customShape= findElement<Button>("customShape");
+        customBaseBoard = findElement<Button>("customBaseBoard");
+        customSingleLayer = findElement<Button>("customSingleLayer");
+        customBoxType = findElement<Button>("customBoxType");
+
+        stacking_type.ClearOptions();
+
+         CreateFolder.getFolderNameList("D:\\GZRobot\\Shape",out stacking_type_value);
+
+
+        this.stacking_type.AddOptions(stacking_type_value);
         Instance = this;
         
         base.setParameter();
     }
+
 
 
 

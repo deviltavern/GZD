@@ -44,6 +44,49 @@ public class CreateFolder : MonoBehaviour {
 
     }
 
+    public static string getFileContent(string path)
+    {
+        string value = "";
+
+        StreamReader sr = new StreamReader(path);
+        value = sr.ReadToEnd();
+
+        return value;
+    }
+    public static List<string> getFolderNameList(string path,out List<string> l2)
+    {
+
+
+        l2 = new List<string>();
+        List<string> tempList = new List<string>();
+        if (!Directory.Exists(path))
+        {
+
+            print("文件夹不存在！");
+        }
+        else
+        {
+            FileInfo[] infoArray = new DirectoryInfo(path).GetFiles();
+            foreach (FileInfo info in infoArray)
+            {
+
+                string value = info.ToString();
+                if (value.Contains(".txt") == true)
+                {
+                    string[] valueArray = value.Split('\\');
+                    Debug.Log(valueArray.Length);
+
+                    l2.Add(valueArray[valueArray.Length-1]);
+                    tempList.Add(value);
+                }
+
+            }
+
+
+        }
+        return tempList;
+
+    }
     void Awake()
     {
         fileButtonParent = GameObject.Find("Canvas").transform.Find("fileView").transform.Find("Content").gameObject.transform.Find("backGround");

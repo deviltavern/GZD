@@ -76,7 +76,7 @@ public class MainFuncPage : MonoBehaviour {
 
     public void onClickCustom()
     {
-        MainScenePage.stackDic[MainSceneResName.custompageName].showPage();
+         MainScenePage.stackDic[MainSceneResName.custompageName].showPage();
         //****************
         MainSceneCustomPage page = (MainSceneCustomPage)MainScenePage.stackDic["MainSceneCustomPage"];
       
