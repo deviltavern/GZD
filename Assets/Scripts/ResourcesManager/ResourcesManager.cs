@@ -10,7 +10,7 @@ public class ResourcesManager : MonoBehaviour {
     public static Dictionary<string, Material> materialDic = new Dictionary<string, Material>();
     public static List<Color> colorList = new List<Color>();
     public static Dictionary<string, Sprite> spDic = new Dictionary<string, Sprite>();
-
+    
 
     public static void setRGB(float r,float g,float b)
     {
@@ -49,7 +49,10 @@ public class ResourcesManager : MonoBehaviour {
         Debug.Log(key);
 
     }
-
+    public void loadWL(string key)
+    {
+        materialDic.Add(key, Resources.Load<Material>(key));
+    }
     public void save2SpDic(string key)
     {
 
@@ -69,7 +72,9 @@ public class ResourcesManager : MonoBehaviour {
 
         load(ResName.shapeDataItem);
         load(ResName.SettingItem);
-
+        loadWL(ResName.wl_jzx_001);
+        loadWL(ResName.wl_jzx_002);
+        loadWL(ResName.wl_jzx_003);
 
         save2MaterialDic(AxleColor, Resources.Load<Material>(AxleColor));
         save2MaterialDic(ResName.AimPointMateril, Resources.Load<Material>(ResName.AimPointMateril));

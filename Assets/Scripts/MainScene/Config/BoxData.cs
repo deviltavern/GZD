@@ -9,6 +9,7 @@ public class BoxData {
     public int width;
     public int height;
     public int len;
+    public string materialsType;
 
     public static Dictionary<string, BoxData> dic = new Dictionary<string, BoxData>();
 
@@ -34,6 +35,13 @@ public class BoxData {
                         data2.height = int.Parse(e2.InnerText);
                         break;
 
+                    case "materials_type":
+
+                        data2.materialsType = e2.InnerText;
+
+
+                        break;
+
 
                     case "len":
                         data2.len = int.Parse(e2.InnerText);
@@ -54,10 +62,7 @@ public class BoxData {
     public override string ToString()
     {
 
-        string str = "";
-        str += width + "\n";
-        str += height + "\n";
-        str += len + "\n";
+      string str =  JsonUtility.ToJson(this);
         return str;
     }
 

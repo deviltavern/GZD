@@ -16,6 +16,7 @@ public class ResName : MonoBehaviour {
     public const string hammer = "hammer";
 
 
+
     //卡板
       public const string bp_lenInput = "bp_lenInput";
       public const string bp_widthInput = "bp_widthInput";
@@ -42,5 +43,13 @@ public class ResName : MonoBehaviour {
 
 
     public const string SettingItem = "SettingItem";
+
+
+    //纹理
+    public const string wl_jzx_001 = "wl_jzx_001";
+    public const string wl_jzx_002 = "wl_jzx_002";
+
+    public const string wl_jzx_003 = "wl_jzx_003";
+
 
 }

@@ -148,7 +148,9 @@ public class CustomController : MonoBehaviour
                     page.box_y.text = BoxData.dic[pressCity].height + "";
                     page.box_z.text = BoxData.dic[pressCity].len + "";
                     page.box_typeNum.text = BoxData.dic[pressCity].id;
-          
+            BaseBoardDisposer.Instance.changeWL(BoxData.dic[pressCity]);
+
+
         }
         else
         {
