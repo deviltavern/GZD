@@ -52,8 +52,8 @@ public class MainFuncPage : MonoBehaviour {
         ListBaseX label_data = ConfigFile.dataDic["cp_label"];
 
         //清除option，添加option
-        dLabel.options.Clear();
-        dLabel.AddOptions(label_data.getList());
+        //dLabel.options.Clear();
+        //dLabel.AddOptions(label_data.getList());
 
         dType.options.Clear();
         dType.AddOptions(type_data.getList());
