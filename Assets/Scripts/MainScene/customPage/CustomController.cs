@@ -51,9 +51,16 @@ public class CustomController : MonoBehaviour
         page.customBaseBoard.onClick.AddListener(onClickcustomBaseBoard);
         page.customSingleLayer.onClick.AddListener(onClickcustomSingleLayer);
         page.customBoxType.onClick.AddListener(onClickcustomBoxType);
-
+        page.simulinkBtn.onClick.AddListener(onClickSimulinkBtn);
     }
 
+
+    public void onClickSimulinkBtn()
+    {
+
+        SceneManager.LoadScene("CarrySimulink");
+
+    }
 
   public void onClickcustomShape() {
         SceneManager.LoadScene("InsShape");
@@ -71,13 +78,16 @@ public class CustomController : MonoBehaviour
 
 
     }
+    /// <summary>
+    /// 箱子形状数据
+    /// </summary>
     public void onClickStackType()
     {
         Debug.Log("点击了堆类型！"+ shapeDic.Count);
         
         BaseBoardDisposer.Instance.insShape(shapeDic[page.stacking_type_value[page.stacking_type.value]]);
 
-        
+        DataCatche.shapeData = shapeDic[page.stacking_type_value[page.stacking_type.value]];
 
     }
     public void onClickCreateBtn()
@@ -104,7 +114,9 @@ public class CustomController : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// 底板数据
+    /// </summary>
     public void onChangeBaseboardDropdown()
     {
         pressBaseboard = page.baseboard_Dropdown.options[page.baseboard_Dropdown.value].text;
@@ -121,7 +133,7 @@ public class CustomController : MonoBehaviour
                     page.baseboard_width.text = BaseboardData.Baseboard_dic[pressBaseboard].width + "";
                     page.baseboard_typeNum.text = BaseboardData.Baseboard_dic[pressBaseboard].id + "";
                     BaseBoardDisposer.Instance.changeValue(BaseboardData.Baseboard_dic[pressBaseboard].width, BaseboardData.Baseboard_dic[pressBaseboard].len);
-
+                    DataCatche.baseBoard = BaseboardData.Baseboard_dic[pressBaseboard];
                 }
             }
         }
@@ -136,6 +148,9 @@ public class CustomController : MonoBehaviour
         Debug.Log("3333333333");
 
     }
+    /// <summary>
+    /// 集装箱数据
+    /// </summary>
     public void onChangeBoxDropdown()
     {
         pressCity = page.box_Dropdown.options[page.box_Dropdown.value].text;
@@ -149,7 +164,7 @@ public class CustomController : MonoBehaviour
                     page.box_z.text = BoxData.dic[pressCity].len + "";
                     page.box_typeNum.text = BoxData.dic[pressCity].id;
             BaseBoardDisposer.Instance.changeWL(BoxData.dic[pressCity]);
-
+            DataCatche.boxData = BoxData.dic[pressCity];
 
         }
         else

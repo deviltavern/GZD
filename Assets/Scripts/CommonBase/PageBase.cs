@@ -8,13 +8,24 @@ public abstract class PageBase : MonoBehaviour {
     public Dictionary<string, PageBase> dic;
     public Vector3 initPosition = new Vector3();
 
-  
+
+    public void add2Dic(string key,PageBase value)
+    {
+        if (dic.ContainsKey(key) == true)
+        {
+            dic[key] = value;
+        }else
+        {
+
+            dic.Add(key, value);
+        }
+    }
     public void Awake()
     {
         setParameter();
         this.GetComponent<RectTransform>().localPosition = initPosition;
-       
-        dic.Add(this.GetType().Name, this);
+
+        add2Dic(this.GetType().Name, this);
 
 
     }

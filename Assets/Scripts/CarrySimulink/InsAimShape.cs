@@ -108,6 +108,9 @@ public class InsAimShape : MonoBehaviour,IViewer {
 
 
     }
+
+
+
     Ray ray;
 
     RaycastHit hit;

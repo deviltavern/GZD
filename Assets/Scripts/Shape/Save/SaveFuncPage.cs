@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
  
 public class SaveFuncPage : MonoBehaviour {
@@ -51,6 +52,8 @@ public class SaveFuncPage : MonoBehaviour {
         sw.Write(value);
         sw.Flush();
         sw.Close();
+
+        SceneManager.LoadScene("MainScene");
         
     }
 }

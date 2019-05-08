@@ -46,7 +46,7 @@ public class ConfigFile : MonoBehaviour {
   //  }
 
 
-
+       
 
     public List<string> _list;
     private ArrayList Adialogue = new ArrayList();
@@ -54,11 +54,22 @@ public class ConfigFile : MonoBehaviour {
     private ArrayList textList = new ArrayList();
     // Use this for initialization
 
+    public static ConfigFile Instance;
 
     void Awake() {
 
 
-        LoadXml();
+        if (Instance == null)
+        {
+            Instance = this;
+            LoadXml();
+        }
+        else
+        {
+            Debug.Log("已经存在ConfigFile");
+        }
+
+      
 
    
 

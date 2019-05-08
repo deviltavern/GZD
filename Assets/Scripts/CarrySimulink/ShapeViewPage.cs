@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ShapeViewPage : MonoBehaviour {
 
     public RectTransform content;
     public RectTransform dataView;
+    public Button SimulinkButton;
+    public Button Reback;
+    public Button transparency;
 
+    public static List<GameObject> gList;
 
     public List<string> getPathContent(string path)
     {
@@ -46,8 +51,46 @@ public class ShapeViewPage : MonoBehaviour {
 
         content = dataView.transform.Find("Content").GetComponent<RectTransform>();
 
-       
-      
+        SimulinkButton = this.transform.Find("SimulinkButton").GetComponent<Button>();
+        transparency = this.transform.Find("transparency").GetComponent<Button>();
+        Reback = this.transform.Find("Reback").GetComponent<Button>();
+        SimulinkButton.onClick.AddListener(onClickSimulinkButton);
+        Reback.onClick.AddListener(onClickRebackBtn);
+        transparency.onClick.AddListener(onClickTransparency);
+    }
+
+    int transParencyValue = 0;
+    public void onClickTransparency()
+    {
+
+        if (transParencyValue % 2 == 0)
+        {
+            BaseBoardDisposer.Instance.changeWL(BaseBoardDisposer.transparencyColor);
+
+        }
+        else
+        {
+            BaseBoardDisposer.Instance.changeWL(BaseBoardDisposer.noneTransparencyColor);
+
+        }
+        transParencyValue++;
+
+    }
+    public void onClickSimulinkButton()
+    {
+
+        gList = BaseBoardDisposer.Instance.insShape(DataCatche.shapeData);
+        BaseBoardDisposer.Instance.changeValue(DataCatche.baseBoard);
+        BaseBoardDisposer.Instance.changeWL(DataCatche.boxData);
+        BaseBoardDisposer.Instance.reOrder(DataCatche.shapeData);
+
+
+
+    }
+    public void onClickRebackBtn()
+    {
+        SceneManager.LoadScene("MainScene");
+
     }
     private void Start()
     {

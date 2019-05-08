@@ -10,8 +10,8 @@ public class ResourcesManager : MonoBehaviour {
     public static Dictionary<string, Material> materialDic = new Dictionary<string, Material>();
     public static List<Color> colorList = new List<Color>();
     public static Dictionary<string, Sprite> spDic = new Dictionary<string, Sprite>();
-    
 
+    public static ResourcesManager Instance;
     public static void setRGB(float r,float g,float b)
     {
         colorList.Add(new Color(r/255f,g/255f,b/255f,98/255f));
@@ -60,8 +60,17 @@ public class ResourcesManager : MonoBehaviour {
     }
     void Awake()
     {
-
-
+      
+        if (ResourcesManager.Instance != null)
+        {
+            Debug.Log("不为空！");
+            return;
+        }
+        else
+        {
+            Debug.Log("为空！");
+            ResourcesManager.Instance = this;
+        }
 
         save2PrefabDic(ResName.chest, Resources.Load<GameObject>(ResName.chest));
         save2PrefabDic(ResName.bullet, Resources.Load<GameObject>(ResName.bullet));

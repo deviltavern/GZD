@@ -20,7 +20,7 @@ public class SelfMotionManager : MonoBehaviour {
         {
             Debug.Log(OriginObject.originObj+"=="+ InsAimShape.Instance.gList.Count);
 
-            CarryToAimStrategy = new CarryToAimShapeStrategy(OriginObject.originObj, InsAimShape.Instance.gList);
+            CarryToAimStrategy = new CarryToAimShapeStrategy(OriginObject.originObj, ShapeViewPage.gList);
         }
         if (Input.GetKey(KeyCode.Z))
         {

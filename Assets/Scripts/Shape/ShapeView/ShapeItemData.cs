@@ -8,6 +8,8 @@ public class ShapeItemData {
 
     public float z;
     public string ID;
+
+    public GameObject shapeItem;
     public static ShapeItemData conveter(Vector3 vec)
     {
         ShapeItemData data = new ShapeItemData();

@@ -10,7 +10,7 @@ public abstract class ButtonEventBase : MonoBehaviour {
     public virtual void Awake()
     {
         button = this.GetComponent<Button>();
-
+        if(button!= null)
         button.onClick.AddListener(onClickButton);
     
     }
