@@ -5,7 +5,6 @@ using UnityEngine;
 public interface IObviewer  {
     void addViewer(IViewer view);
     void deleteViewer(IViewer view);
-
     void broadCast(ViewInfo info);
 
 }

@@ -13,7 +13,7 @@ public class BaseboardData{
 
     public static void getData(XmlNodeList data)
     {
-
+        Baseboard_dic.Clear();
         foreach (XmlElement element in data)
         {
             XmlNodeList list = element.ChildNodes;
@@ -39,7 +39,7 @@ public class BaseboardData{
             }
 
             Baseboard_dic.Add(data3.id, data3);
-            Debug.Log(data3.ToString());
+
         }
 
 

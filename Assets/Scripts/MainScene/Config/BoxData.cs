@@ -15,7 +15,7 @@ public class BoxData {
 
 	public static void getData(XmlNodeList data)
     {
-       
+        dic.Clear();
         foreach (XmlElement element in data)
         {
             XmlNodeList list =  element.ChildNodes;
@@ -53,7 +53,7 @@ public class BoxData {
             }
 
             dic.Add(data2.id,data2);
-            Debug.Log(data2.ToString());
+
         }
     
     

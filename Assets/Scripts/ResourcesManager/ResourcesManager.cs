@@ -79,6 +79,7 @@ public class ResourcesManager : MonoBehaviour {
         save2PrefabDic(ResName.layerItem, Resources.Load<GameObject>(ResName.layerItem));
         //save2SpDic(ResName.hammer);
 
+        load(ResName.baseboardItem);
         load(ResName.shapeDataItem);
         load(ResName.SettingItem);
         loadWL(ResName.wl_jzx_001);

@@ -8,4 +8,6 @@ public class ViewInfo {
     public GameObject aimObje { get; set; }
 
     public string arg1;
+    public string arg2;
+    public object arg3;
 }

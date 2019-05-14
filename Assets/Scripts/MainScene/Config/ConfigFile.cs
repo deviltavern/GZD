@@ -63,6 +63,7 @@ public class ConfigFile : MonoBehaviour {
         {
             Instance = this;
             LoadXml();
+            
         }
         else
         {
@@ -128,7 +129,7 @@ public class ConfigFile : MonoBehaviour {
     }
 
    public static Dictionary<string, ListBaseX> dataDic = new Dictionary<string, ListBaseX>();
-    void LoadXml()
+   public void LoadXml()
     {
 
         dataDic.Clear();
@@ -139,6 +140,7 @@ public class ConfigFile : MonoBehaviour {
         //得到page节点下的所有子节点
         XmlNodeList xmlNodeList = xml.SelectSingleNode("page").ChildNodes;
         //遍历所有子节点，每个子节点都以列表形式保存
+       
         foreach (XmlElement xl1 in xmlNodeList)
         {
 

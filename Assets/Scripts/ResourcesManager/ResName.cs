@@ -10,6 +10,7 @@ public class ResName : MonoBehaviour {
     public const string bullet = "bullet";
     public const string layerItem = "layerItem";
     public const string shapeItem = "shapeItem";
+    public const string baseboardItem = "baseboardItem";
     public const string shapeDataItem = "shapeDataItem";
     public const string AimPointMateril = "AimPoint";
     public const string OnGetOriginMateril = "OnGetOrigin";

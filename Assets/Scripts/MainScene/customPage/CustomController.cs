@@ -4,31 +4,33 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class CustomController : MonoBehaviour
+public class CustomController : MonoBehaviour,IViewer
 {
     /// <summary>
     /// MVC模式的 controller
     /// </summary>
     /// 
 
+    public static CustomController Instance;
     MainSceneCustomPage page;
     string pressCity;
     string pressBaseboard;
-
+    public void Awake()
+    { 
+        Instance = this;
+    }
 
     Dictionary<string, ShapeData> shapeDic = new Dictionary<string, ShapeData>();
     private void Start()
     {
 
         page = (MainSceneCustomPage)MainScenePage.stackDic["MainSceneCustomPage"];
-
-
+        
         page.createBtn.onClick.AddListener(onClickCreateBtn);
         page.saveBtn.interactable = false;
-
+       
         page.saveBtn.onClick.AddListener(onClickSaveBtn);
-
-
+        /*下拉框监听值变化*/
         page.box_Dropdown.onValueChanged.AddListener(delegate { onChangeBoxDropdown(); });
         page.baseboard_Dropdown.onValueChanged.AddListener(delegate { onChangeBaseboardDropdown(); });
 
@@ -68,7 +70,7 @@ public class CustomController : MonoBehaviour
 
     }
   public void onClickcustomBaseBoard (){
-               
+      SceneManager.LoadScene("Baseboard");     
     }          
   public void onClickcustomSingleLayer() {
                
@@ -145,9 +147,16 @@ public class CustomController : MonoBehaviour
 
         }
 
-        Debug.Log("3333333333");
+
 
     }
+
+    public void setDropDownView(Dropdown dn,int value)
+    {
+        dn.value = value;
+    
+    }
+
     /// <summary>
     /// 集装箱数据
     /// </summary>
@@ -176,6 +185,23 @@ public class CustomController : MonoBehaviour
         }
 
         Debug.Log("2222222222222222222222222222222222222222");
+
+    }
+
+    public void update(ViewInfo info)
+    {
+
+        MainFuncPage.Instance.onClickCustom();
+        int value = int.Parse(info.arg1);
+
+
+        BaseboardData data = (BaseboardData)info.arg3;
+        Debug.Log("接受的参数：" + value);
+        //
+        setDropDownView(page.baseboard_Dropdown, value+1);
+
+
+
 
     }
 }

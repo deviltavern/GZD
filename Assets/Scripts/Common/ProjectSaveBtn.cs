@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ProjectSaveBtn : ButtonEventBase {
-
+  
   
     public InputField bp_lenInput;
     public InputField bp_widthInput;
@@ -35,7 +35,7 @@ public class ProjectSaveBtn : ButtonEventBase {
         StreamWriter sw = new StreamWriter(ConfigFile.dataDic["savePath"].getList()[0] + saveName);
         PorjectData data = new PorjectData();
    
-   //   data.baseplate_length = 123.333f;
+   
 
 
  //卡板page的参数

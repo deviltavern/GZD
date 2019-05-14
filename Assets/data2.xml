@@ -69,6 +69,61 @@
       <width>6</width>
       <len>9</len>
     </baseboard_data>
+    <baseboard_data>
+      <baseboard_id>501</baseboard_id>
+      <width>100</width>
+      <len>500</len>
+    </baseboard_data>
+    <baseboard_data>
+      <baseboard_id>502</baseboard_id>
+      <width>200</width>
+      <len>500</len>
+    </baseboard_data>
+    <baseboard_data>
+      <baseboard_id>503</baseboard_id>
+      <width>300</width>
+      <len>500</len>
+    </baseboard_data>
+    <baseboard_data>
+      <baseboard_id>808</baseboard_id>
+      <width>808</width>
+      <len>808</len>
+    </baseboard_data>
+    <baseboard_data>
+      <baseboard_id>556</baseboard_id>
+      <width>60</width>
+      <len>556</len>
+    </baseboard_data>
+    <baseboard_data>
+      <baseboard_id>299</baseboard_id>
+      <width>200</width>
+      <len>200</len>
+    </baseboard_data>
+    <baseboard_data>
+      <baseboard_id>234</baseboard_id>
+      <width>200</width>
+      <len>200</len>
+    </baseboard_data>
+    <baseboard_data>
+      <baseboard_id>1231</baseboard_id>
+      <width>556</width>
+      <len>556</len>
+    </baseboard_data>
+    <baseboard_data>
+      <baseboard_id>2331</baseboard_id>
+      <width>123</width>
+      <len>123</len>
+    </baseboard_data>
+    <baseboard_data>
+      <baseboard_id>45</baseboard_id>
+      <width>45</width>
+      <len>45</len>
+    </baseboard_data>
+    <baseboard_data>
+      <baseboard_id>321</baseboard_id>
+      <width>32</width>
+      <len>32</len>
+    </baseboard_data>
   </baseboard_data_all>
   <box_data_all>
     <box_data>
@@ -76,25 +131,21 @@
       <width>111</width>
       <height>333</height>
       <len>222</len>
-	  <materials_type>wl_jzx_001</materials_type>
+      <materials_type>wl_jzx_001</materials_type>
     </box_data>
-
     <box_data>
       <box_id>404</box_id>
       <width>111</width>
       <height>3333</height>
       <len>2222</len>
-	  <materials_type>wl_jzx_002</materials_type>
+      <materials_type>wl_jzx_002</materials_type>
     </box_data>
-	
-	
     <box_data>
       <box_id>315</box_id>
       <width>3</width>
       <height>77</height>
       <len>66</len>
-	  <materials_type>wl_jzx_003</materials_type>
+      <materials_type>wl_jzx_003</materials_type>
     </box_data>
-
   </box_data_all>
 </page>

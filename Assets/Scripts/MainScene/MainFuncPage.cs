@@ -10,6 +10,7 @@ public class MainFuncPage : MonoBehaviour {
     public Button history;
     public Button custom;
     public Button simulink;
+    public static MainFuncPage Instance;
     private void Awake()
     {
         backGround = this.transform.Find("backGround").GetComponent<RectTransform>();
@@ -23,7 +24,7 @@ public class MainFuncPage : MonoBehaviour {
         history.onClick.AddListener(onClickHistory);
         custom.onClick.AddListener(onClickCustom);
         simulink.onClick.AddListener(onClickSimulink);
-   
+        Instance = this;
 
     }
 
