@@ -16,7 +16,8 @@ public class ResName : MonoBehaviour {
     public const string OnGetOriginMateril = "OnGetOrigin";
     public const string hammer = "hammer";
 
-
+    //单层模型
+    public const string insLayerCube = "insLayerCube";
 
     //卡板
       public const string bp_lenInput = "bp_lenInput";
