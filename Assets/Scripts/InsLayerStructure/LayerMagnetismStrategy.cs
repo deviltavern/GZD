@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LayerMoveStrategy : Strategy {
+public class LayerMagnetismStrategy : Strategy
+{
 
-
-   public  Ray ray;
-   public RaycastHit hit;
-   float disStandard;
+    public Ray ray;
+    public RaycastHit hit;
+    public float dis2;
+    public float disStandard;
     public Vector3 posBallfrom;
     public Vector3 posBallto;
     //public Dictionary<int, Vector3> dirType = new Dictionary<int, Vector3>();
@@ -19,36 +20,33 @@ public class LayerMoveStrategy : Strategy {
     public GameObject getAngleLabel;
     public Text initAngleLabel;
     public float frameTime2;
-  public  Vector3 initCirclePos;
+    public Vector3 initCirclePos;
     // Use this for initialization
-   public Vector3 initCircleDir;
+    public Vector3 initCircleDir;
 
     public Vector3 p1;
     public Vector3 p5;
-  
-    
-    public static Dictionary<int, Vector3> dirType = new Dictionary<int, Vector3>();
+
+
     public MouseBallAction mouseBall;
     public AngleBallAction mouseAngle;
     public MouseLabelAction mouseLabel;
-    
-    
-    /// <summary>
-    /// 构造函数：传参
-    /// </summary>
-    public LayerMoveStrategy(Vector3 _posballfrom, Vector3 _posballto,  float _frameTime2 )
+    public LayerMagnetismStrategy( Vector3 _posballfrom, Vector3 _posballto,float _frameTime2 )
     {
 
         this.posBallto = _posballto;
-        this.posBallfrom=_posballfrom;
+        this.posBallfrom = _posballfrom;
         this.frameTime2 = _frameTime2;
-        this.disStandard = 10f;
+
+        disStandard = 0.5f;
     }
 
     public override void doSomthing()
     {
-        if (frameTime2 > Time.deltaTime )
+
+        if (frameTime2 > Time.deltaTime)
         {
+
 
 
             insLine(posBallfrom, getInputPosition());
@@ -72,29 +70,42 @@ public class LayerMoveStrategy : Strategy {
 
 
             insCircle(p1, p5, tempAngle);
-     
+            
+    float dis2 = lengh * 10 * cosValue;
+    int disStandardTemp = (int)(dis2 / disStandard);
+    
+    float distance2 = disStandardTemp * disStandard;
+    Debug.Log("目标：" + disStandardTemp + ":::::::::::::" + distance2 + "::::::::::::" + dis2 + ":::" + posBallfrom);
+    Vector3 disPos2 = posBallfrom + tempDir*distance2;
 
-            insLine(posBallfrom, tempPosition);
 
-            insLine(tempPosition, getInputPosition());
+    insLine(posBallfrom, disPos2);
 
+    insLine(disPos2, getInputPosition());
+
+
+         //    insLine(posBallfrom, tempPosition);
+         // 
+         //    insLine(tempPosition, getInputPosition());
         }
-       frameTime2 = 0;
+        frameTime2 = 0;
     }
-   
+
     public override void waitting()
     {
-      
+       
     }
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     public void insLine(Vector3 from, Vector3 to)
     {
@@ -105,7 +116,6 @@ public class LayerMoveStrategy : Strategy {
         mouseBall.ballTo = to;
 
     }
-
 
 
 
@@ -123,7 +133,7 @@ public class LayerMoveStrategy : Strategy {
     }
 
 
-    
+
     public Vector3 getStandard(Vector3 pos)
     {
         return new Vector3(pos.x, 0, pos.z);
@@ -266,4 +276,5 @@ public class LayerMoveStrategy : Strategy {
         }
 
     }
+
 }

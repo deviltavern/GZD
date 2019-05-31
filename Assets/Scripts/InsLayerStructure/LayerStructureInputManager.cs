@@ -10,11 +10,13 @@ public class LayerStructureInputManager : MonoBehaviour {
     Vector3 initCirclePos;
 	// Use this for initialization
     Vector3 initCircleDir;
- 
+    public bool ButtonOk = false;
     Vector3 p1;
     Vector3 p5;
  Ray ray;
-   RaycastHit hit;
+
+ bool isTouch;
+ RaycastHit hit;
    public GameObject ball;
   public static Dictionary<int, Vector3> dirType = new Dictionary<int, Vector3>();
   public MouseBallAction mouseBall;
@@ -25,7 +27,7 @@ public class LayerStructureInputManager : MonoBehaviour {
   /// 声明策略
   /// </summary>
     public Strategy strategy { get; set; }
-    public Strategy strategyMouseBall { get; set; }
+    public Strategy strategyMagnetism { get; set; }
 
 	void Start () {
         dirType.Add(0, Vector3.forward);
@@ -43,36 +45,6 @@ public class LayerStructureInputManager : MonoBehaviour {
 	// Update is called once per frame
 
     float frameTime = 0;
-
-
-    
-    public void insLine(Vector3 from,Vector3 to)
-    {
-
-        getBall = initGetBall(initBall, from);
-        mouseBall = getBall.AddComponent<MouseBallAction>();
-        mouseBall.ballFrom = from;
-        mouseBall.ballTo = to;
-                    
-    }
-
-
-
-    public void insCircle(Vector3 from, Vector3 to,float _angel) {
-        getCircle = initGetBall(initBall, from);
-        mouseAngle = getCircle.AddComponent<AngleBallAction>();
-        mouseAngle.ballfrom = from;
-        mouseAngle.ballto = to;
-        mouseAngle.label = initGetLable(initAngleLabel, Camera.main.WorldToScreenPoint(to));
-        mouseAngle.Angle = (180-_angel);
-       
-        mouseAngle.transform.position = from;
-    
-    }
-
-
-    
-
     float frameTime2 = 0;
     float dis;
      GameObject Cube;
@@ -86,18 +58,19 @@ public class LayerStructureInputManager : MonoBehaviour {
         {
             strategy.doSomthing();
             Debug.Log("执行策略");
+            //画三角形的策略
         }
 
-        if (strategyMouseBall != null)
+        if (strategyMagnetism != null)
         {
-            strategyMouseBall.doSomthing();
+            strategyMagnetism.doSomthing();
             Debug.Log("执行策略");
         }
 
 
-        if (Input.GetMouseButtonDown(0))
-        {
-          
+            if (Input.GetMouseButtonDown(0))
+        
+            {
 
             lastVec = getInputPosition();
             posBallfrom = hit.point;
@@ -105,7 +78,7 @@ public class LayerStructureInputManager : MonoBehaviour {
             //按下左键后，获取相机拍摄下的鼠标点击的位置，
             //lastVec与preVec的位置，y取消，用来计算方向。
 
-           
+            if (isTouch == true) { 
             if (hit.collider.tag == "Box")
             {
            //     hit.collider.gameObject.transform.position += dirTypeObtain * Time.deltaTime * 30;
@@ -113,14 +86,13 @@ public class LayerStructureInputManager : MonoBehaviour {
                 //hit检测碰撞到的物体（tag标记为Box）,Cube
 
             }
-
+            }
         }
 
 
         if (Cube != null)
         {
             if (Input.GetMouseButton(0))
-
             {
                 //实时时间frameTime箱子时间
                 frameTime += Time.deltaTime;
@@ -145,37 +117,20 @@ public class LayerStructureInputManager : MonoBehaviour {
                 //实时时间frameTime2，用来记录ball的时间
                 if (frameTime2 > Time.deltaTime * 3)
                 {
-                    frameTime2 = 0;
-                    //每隔3帧
-                    insLine(posBallfrom, getInputPosition());
-                    //生成第一个球
-                    Vector3 tempDir = getDir(getStandard(getInputPosition()), getStandard(posBallfrom));
-                    //规正方向tempDir
-                    float tempAngle = Vector3.Angle(tempDir,Vector3.Normalize(getStandard(getInputPosition())- getStandard(posBallfrom)));
-                    //求夹角
-                   // float cosValue = Mathf.Abs(Mathf.Cos(tempAngle * Mathf.PI / 180f));
-                    //求cos夹角
-                    float cosValue = Mathf.Cos(tempAngle * Mathf.PI / 180f);
-                    Debug.Log(180 - tempAngle + ":" + cosValue);
-                    Vector3 tempPosition = posBallfrom + tempDir * cosValue * Vector3.Distance(getStandard(getInputPosition()), getStandard(posBallfrom));
-//初始圆圈的位置： 距离
-                   
-                    initCircleDir = Vector3.Normalize(posBallfrom - getInputPosition());
-                    initCirclePos = posBallfrom + initCircleDir * 2;
-                    float lengh = getOnTimeMouseLenthFromSourceDir(posBallfrom) / 10;
-                    p1 = posBallfrom + getOnTimeMousePointFromSourceDir(posBallfrom) * lengh;
-                    p5 = posBallfrom -tempDir * lengh;
+                    if (LayerStructureAction.Instance.ButtonOk == true)
+                    {
+                        //  Debug.Log()
+                        //    this.strategy = new LayerMoveStrategy(posBallfrom, posBallto, frameTime2);
+                        this.strategyMagnetism = new LayerMagnetismStrategy(posBallfrom, posBallto, frameTime2);
 
-
-                    insCircle(p1, p5, tempAngle);
-                    Debug.Log("p1:" + p1 + "-----+p5:" + p5);
-                    insLine(posBallfrom, tempPosition);
-
-                    insLine(tempPosition,getInputPosition());
-                
+                        //   frameTime2 = 0;
+                    }
+                    else
+                    {
+                        this.strategy = new LayerMoveStrategy(posBallfrom, posBallto, frameTime2);
+                    }
                 }
-              
-               // this.strategyMouseBall = new LayerMouseBallStrategy(preVec, lastVec, getBall, posBallfrom, posBallto);
+
             }
 
 
@@ -329,7 +284,7 @@ public class LayerStructureInputManager : MonoBehaviour {
     public Vector3 getInputPosition()
     {
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        bool isTouch = Physics.Raycast(ray, out hit);
+        isTouch = Physics.Raycast(ray, out hit);
         if (isTouch == true)
         {
             Vector3 pos = hit.point;
@@ -342,6 +297,7 @@ public class LayerStructureInputManager : MonoBehaviour {
         }
 
     }
+
     public Vector3 getInputPosition(float y)
     {
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);

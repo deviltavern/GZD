@@ -66,7 +66,6 @@ public class AngleBallAction : MonoBehaviour {
      //   AnglePosDic.Add(3, p4);
    //     AnglePosDic.Add(4, p5);
 
-        Debug.Log("旋转坐标系后的Angle"+Angle);
 	}
     int index = 0;
     void Update()

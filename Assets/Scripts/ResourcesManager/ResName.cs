@@ -42,7 +42,7 @@ public class ResName : MonoBehaviour {
       public const string config = "config";
 
       public const string block = "block";
-
+      public const string ShapeItem = "ShapeItem";
 
     public const string SettingItem = "SettingItem";
 

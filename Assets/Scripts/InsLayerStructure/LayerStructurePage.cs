@@ -31,6 +31,9 @@ public class LayerStructurePage : MonoBehaviour {
     public InputField LayerItem_RX;
     public InputField LayerItem_RY;
     public InputField LayerItem_RZ;
+
+    public RectTransform MagnetismPage;
+    public Button MagnetismBtn;
     
   //  public InputField InsRotion;
     
@@ -40,6 +43,7 @@ public class LayerStructurePage : MonoBehaviour {
 
     public Button saveBtn;
     public GameObject canvas1;
+ 
     void Awake()
     {
         Instance = this;
@@ -55,7 +59,17 @@ public class LayerStructurePage : MonoBehaviour {
 
         insBtn = this.transform.Find("InsBtn").GetComponent<Button>();
 
+        //磁力
+        MagnetismPage = this.transform.Find("MagnetismPage").GetComponent<RectTransform>();
+        MagnetismBtn = MagnetismPage.transform.Find("MagnetismBtn").GetComponent<Button>();
+
+
+
+
         InsLayerItem = this.transform.Find("InsLayerStructureItem").GetComponent<RectTransform>();
+      
+        
+        
         LayerItem_width = InsLayerItem.transform.Find("LayerItem_width").GetComponent<InputField>();
         LayerItem_len = InsLayerItem.transform.Find("LayerItem_len").GetComponent<InputField>();
         LayerItem_height = InsLayerItem.transform.Find("LayerItem_height").GetComponent<InputField>();

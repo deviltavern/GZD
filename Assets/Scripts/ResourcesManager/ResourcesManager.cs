@@ -80,11 +80,14 @@ public class ResourcesManager : MonoBehaviour {
         //save2SpDic(ResName.hammer);
 
  
+       
         load(ResName.shapeDataItem);
+       
         load(ResName.SettingItem);
         loadWL(ResName.wl_jzx_001);
         loadWL(ResName.wl_jzx_002);
         loadWL(ResName.wl_jzx_003);
+        load(ResName.ShapeItem);
 
         save2MaterialDic(AxleColor, Resources.Load<Material>(AxleColor));
         save2MaterialDic(ResName.AimPointMateril, Resources.Load<Material>(ResName.AimPointMateril));
