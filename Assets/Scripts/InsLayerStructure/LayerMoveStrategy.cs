@@ -226,7 +226,7 @@ public class LayerMoveStrategy : Strategy {
         int dirTypeInt = getMatchDirType(dirList);
         Vector3 dirTypes = LayerStructureInputManager.dirType[dirTypeInt];
 
-        Debug.Log("方向值：" + dirTypeInt);
+
         return dirTypes;
     }
 
@@ -264,6 +264,14 @@ public class LayerMoveStrategy : Strategy {
         {
             return new Vector3();
         }
+
+    }
+
+    public override void onEnd()
+    {
+        
+
+
 
     }
 }

@@ -8,6 +8,7 @@ public class LayerStructureItem : MonoBehaviour {
     public GameObject InsLayerCube;
     public GameObject InsLayerball;
     public GameObject initBall;
+    public GameObject baseBoard;
     public Text InsAngelLabel;
     Camera ca;
     LayerStructurePage page;
@@ -27,10 +28,12 @@ public class LayerStructureItem : MonoBehaviour {
         page = LayerStructurePage.Instance;
   
         LayerCube = Resources.Load<GameObject>("insLayerCube");
-        InsLayerCube = GameObject.Instantiate(LayerCube,this.transform);
+      //  InsLayerCube = GameObject.Instantiate(LayerCube,this.transform);
         InsLayerball = Resources.Load<GameObject>("insBall");
         InsAngelLabel = Resources.Load<Text>("AngelLabel");
+
+        baseBoard = this.transform.Find("board").gameObject;
         //initBall = GameObject.Instantiate(InsLayerball, this.transform);
-       // ca.ScreenPointToRay(Input.mousePosition);
+        // ca.ScreenPointToRay(Input.mousePosition);
     }
 }

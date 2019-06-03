@@ -22,4 +22,9 @@ public class StepStrategyTemplates : Strategy {
     {
         throw new System.NotImplementedException();
     }
+
+    public override void onEnd()
+    {
+        throw new System.NotImplementedException();
+    }
 }

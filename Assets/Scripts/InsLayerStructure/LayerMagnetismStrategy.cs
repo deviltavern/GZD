@@ -277,4 +277,8 @@ public class LayerMagnetismStrategy : Strategy
 
     }
 
+    public override void onEnd()
+    {
+        throw new System.NotImplementedException();
+    }
 }

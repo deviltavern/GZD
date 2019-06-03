@@ -362,4 +362,9 @@ public class SelfMotionStrategyX : Strategy {
     {
        
     }
+
+    public override void onEnd()
+    {
+        throw new System.NotImplementedException();
+    }
 }

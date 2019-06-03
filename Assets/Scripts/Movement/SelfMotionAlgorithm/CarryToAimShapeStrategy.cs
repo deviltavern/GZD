@@ -93,5 +93,8 @@ public class CarryToAimShapeStrategy : Strategy {
        
     }
 
-  
+    public override void onEnd()
+    {
+        throw new System.NotImplementedException();
+    }
 }

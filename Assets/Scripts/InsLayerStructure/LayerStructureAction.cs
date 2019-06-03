@@ -31,7 +31,7 @@ public class LayerStructureAction : MonoBehaviour {
     void Start()
     {
         page = LayerStructurePage.Instance;
-       page.insBtn.onClick.AddListener(OnClickInsBtn);
+        page.insBtn.onClick.AddListener(OnClickInsBtn);
 
         page.TypeInput.gameObject.SetActive(false);
         page.saveOk.gameObject.SetActive(false);

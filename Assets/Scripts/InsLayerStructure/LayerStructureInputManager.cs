@@ -3,57 +3,109 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LayerStructureInputManager : MonoBehaviour {
+public class LayerStructureInputManager : MonoBehaviour, StrategyMaster
+{
     Vector3 dirTypeObtain;
     Vector3 posBallfrom;
     Vector3 posBallto;
     Vector3 initCirclePos;
-	// Use this for initialization
+    // Use this for initialization
     Vector3 initCircleDir;
     public bool ButtonOk = false;
     Vector3 p1;
     Vector3 p5;
- Ray ray;
 
- bool isTouch;
- RaycastHit hit;
-   public GameObject ball;
-  public static Dictionary<int, Vector3> dirType = new Dictionary<int, Vector3>();
-  public MouseBallAction mouseBall;
-  public AngleBallAction mouseAngle;
-  public MouseLabelAction mouseLabel;
-  
+
+    bool isTouch;
+    Ray ray;
+    RaycastHit hit;
+    public GameObject ball;
+    public static Dictionary<int, Vector3> dirType = new Dictionary<int, Vector3>();
+    public MouseBallAction mouseBall;
+    public AngleBallAction mouseAngle;
+    public MouseLabelAction mouseLabel;
+    
+
     /// <summary>
-  /// 声明策略
-  /// </summary>
+    /// 声明策略
+    /// </summary>
     public Strategy strategy { get; set; }
     public Strategy strategyMagnetism { get; set; }
 
-	void Start () {
+    void Start()
+    {
         dirType.Add(0, Vector3.forward);
-        dirType.Add(1,Vector3.back);
-        dirType.Add(2,Vector3.left);
+        dirType.Add(1, Vector3.back);
+        dirType.Add(2, Vector3.left);
         dirType.Add(3, Vector3.right);
-	}
+        insStrategy = new InputStrategy_InsBox();
+        CameraStrategy = new InputStrategy_Camera(this);
+        DeleteStategy = new InputStrategy_Delete(this);
+        inputStrategy_Save = new InputStrategy_Save();
+    }
 
-   
+
     // 定义两个向量 lastVec、preVec
     Vector3 lastVec;
     Vector3 preVec;
     Vector3 dir;
     Vector3 initBall_pos;
-	// Update is called once per frame
+    // Update is called once per frame
 
     float frameTime = 0;
     float frameTime2 = 0;
     float dis;
-     GameObject Cube;
+    GameObject Cube;
     public GameObject initBall;
     public GameObject getBall;
     public GameObject getCircle;
     public GameObject getAngleLabel;
     public Text initAngleLabel;
-	void Update () {
+
+
+
+    private Strategy strechStrategy;
+    private Strategy boxMoveStrategy;
+
+    private Strategy boxRotateStrategy;
+
+    private Strategy insStrategy;
+
+    private Strategy CameraStrategy;
+
+    private Strategy DeleteStategy;
+    private Strategy inputStrategy_Save;
+
+
+    public Dictionary<int, Vector3> cubeFaceDic = new Dictionary<int, Vector3>();
+
+
+
+    /// <summary>
+    /// 得到鼠标点位到箱子的具体方向
+    /// </summary>
+    /// <returns></returns>
+
+
+
+    void Update()
+    {
+
+        if (strechStrategy != null)
+        {
+            strechStrategy.doSomthing();
+        }
+
+        if (boxMoveStrategy != null)
+        {
+            boxMoveStrategy.doSomthing();
+        }
+
+        if (boxRotateStrategy != null)
+        {
+
+            boxRotateStrategy.doSomthing();
+        }
         if (strategy != null)
         {
             strategy.doSomthing();
@@ -67,10 +119,30 @@ public class LayerStructureInputManager : MonoBehaviour {
             Debug.Log("执行策略");
         }
 
+        if (insStrategy != null)
+        {
+            insStrategy.doSomthing();
+        }
+        if (CameraStrategy != null)
+        {
+            CameraStrategy.doSomthing();
+        }
 
-            if (Input.GetMouseButtonDown(0))
-        
-            {
+        if (DeleteStategy != null)
+        {
+
+            DeleteStategy.doSomthing();
+        }
+
+        if (inputStrategy_Save != null)
+        {
+            inputStrategy_Save.doSomthing();
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+
+
+
 
             lastVec = getInputPosition();
             posBallfrom = hit.point;
@@ -78,20 +150,42 @@ public class LayerStructureInputManager : MonoBehaviour {
             //按下左键后，获取相机拍摄下的鼠标点击的位置，
             //lastVec与preVec的位置，y取消，用来计算方向。
 
-            if (isTouch == true) { 
-            if (hit.collider.tag == "Box")
+            if (isTouch == true)
             {
-           //     hit.collider.gameObject.transform.position += dirTypeObtain * Time.deltaTime * 30;
-               Cube = hit.collider.gameObject;
-                //hit检测碰撞到的物体（tag标记为Box）,Cube
 
-            }
+
+                if (hit.collider.tag == "Box")
+                {
+                    //     hit.collider.gameObject.transform.position += dirTypeObtain * Time.deltaTime * 30;
+                    Cube = hit.collider.gameObject;
+                    //hit检测碰撞到的物体（tag标记为Box）,Cube
+                   // LayerStructrueDataCache.Instance.pointBox = Cube;
+
+                    LayerStructrueDataCache.Instance.onSelect(Cube);
+
+                }
             }
         }
 
 
         if (Cube != null)
         {
+            if (Input.GetMouseButtonDown(0))
+            {
+                endStrategy();
+                strechStrategy = new InputStrategy_Stretch(LayerStructrueDataCache.Instance.pointBox);
+             
+
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                Debug.Log("执行move策略");
+
+                endStrategy();
+                boxMoveStrategy = new LayerStructureStrategy_Move(LayerStructrueDataCache.Instance.pointBox, this);
+                boxRotateStrategy = new InputStrategy_Rotate(LayerStructrueDataCache.Instance.pointBox);
+
+            }
             if (Input.GetMouseButton(0))
             {
                 //实时时间frameTime箱子时间
@@ -140,13 +234,8 @@ public class LayerStructureInputManager : MonoBehaviour {
             //
 
             //旋转
-            if (Input.GetMouseButtonDown(1))
-            {
-                if (hit.collider.tag == "Box")
-                {
-                    hit.collider.gameObject.transform.Rotate(Vector3.up, 30);
-                }
-            }
+
+
 
         }
 
@@ -157,18 +246,18 @@ public class LayerStructureInputManager : MonoBehaviour {
 
         if (Input.GetMouseButtonUp(0))
         {
-            Debug.Log("抬起");
 
-            posBallto = hit.point;  
+
+            posBallto = hit.point;
             //    this.strategy = new LayerMoveStrategy(preVec, lastVec, Cube, dirTypeObtain, ball, posBallfrom,posBallto);
-          
+
 
         }
 
 
 
-		
-	}
+
+    }
 
 
     public Vector3 getStandard(Vector3 pos)
@@ -178,14 +267,14 @@ public class LayerStructureInputManager : MonoBehaviour {
 
     }
     public GameObject initGetBall(GameObject _initBall, Vector3 _posBallfrom)
-    { 
-     //生成球---第0帧
+    {
+        //生成球---第0帧
         _initBall = GameObject.Instantiate(LayerStructureItem.Instance.InsLayerball, LayerStructureItem.Instance.transform);
-            _initBall.transform.position = _posBallfrom;
-            return _initBall;
-    
+        _initBall.transform.position = _posBallfrom;
+        return _initBall;
+
     }
-    public Text initGetLable(Text _initAngelLable,Vector3 _p5)
+    public Text initGetLable(Text _initAngelLable, Vector3 _p5)
     {
         //生成球---第0帧
         _initAngelLable = GameObject.Instantiate(LayerStructureItem.Instance.InsAngelLabel, CanvasManager.canvas.transform);
@@ -244,7 +333,7 @@ public class LayerStructureInputManager : MonoBehaviour {
     /// <returns></returns>
     public float getOnTimeMouseLenthFromSourceDir(Vector3 sourceDir)
     {
-        float dir = Vector3.Distance(getStandard(getInputPosition()),getStandard(sourceDir));
+        float dir = Vector3.Distance(getStandard(getInputPosition()), getStandard(sourceDir));
 
         return dir;
 
@@ -258,7 +347,7 @@ public class LayerStructureInputManager : MonoBehaviour {
 
     public Vector3 getDir(Vector3 inputDir)
     {
-      //  Debug.Log(inputDir);
+        //  Debug.Log(inputDir);
         float front = Vector3.Angle(inputDir, Vector3.forward);
         float back = Vector3.Angle(inputDir, Vector3.back);
         float left = Vector3.Angle(inputDir, Vector3.left);
@@ -313,5 +402,40 @@ public class LayerStructureInputManager : MonoBehaviour {
             return new Vector3();
         }
 
+    }
+
+    public void endStrategy()
+    {
+        if (boxRotateStrategy != null)
+        {
+            boxRotateStrategy.onEnd();
+
+            boxRotateStrategy = null;
+        }
+        if (boxMoveStrategy != null)
+        {
+            boxMoveStrategy.onEnd();
+
+            boxMoveStrategy = null;
+        }
+
+        if (strechStrategy != null)
+        {
+            strechStrategy.onEnd();
+
+            strechStrategy = null;
+        }
+
+
+
+    }
+
+    public void endStrategy(Strategy strategy)
+    {
+        if (this.boxMoveStrategy == strategy)
+        {
+            boxMoveStrategy = null;
+
+        }
     }
 }

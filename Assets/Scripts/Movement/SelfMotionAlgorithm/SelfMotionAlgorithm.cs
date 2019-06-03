@@ -496,4 +496,9 @@ public class SelfMotionAlgorithm : Strategy
         }
 
     }
+
+    public override void onEnd()
+    {
+        throw new System.NotImplementedException();
+    }
 }
