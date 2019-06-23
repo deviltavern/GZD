@@ -18,18 +18,11 @@ public class InputStrategy_Stretch : Strategy
     /// <summary>
     /// 描述当前选择的面
     /// </summary>
-    public int faceType { get; set; }
+    public static int faceType { get; set; }
     /// <summary>
     /// 扩张箱子
     /// </summary>
-    public void stretchCube(int type)
-    {
 
-
-        this.faceType = type;
-
-        stretchCube();
-    }
 
     public void stretchCube()
     {
@@ -40,7 +33,7 @@ public class InputStrategy_Stretch : Strategy
 
 
       
-        switch (this.faceType)
+        switch (faceType)
         {
             case 0:
                 this.cube.transform.localScale += new Vector3(scrollValue, 0, 0);
@@ -64,13 +57,19 @@ public class InputStrategy_Stretch : Strategy
     public InputStrategy_Stretch(GameObject _cube)
     {
 
-
+        if (_cube == null)
+            return;
         this.cube = _cube;
         // upCube = GameObject.Instantiate(ResourcesManager.prefabDic["indicateCube"], cube.transform.parent);
         //
         // rightCube = GameObject.Instantiate(ResourcesManager.prefabDic["indicateCube"], cube.transform.parent);
         // frontCube = GameObject.Instantiate(ResourcesManager.prefabDic["indicateCube"], cube.transform.parent);
-        this.faceType = getFaceType(getPointToItemDir(), cube.transform.localScale);
+      int _faceType  = getFaceType(getPointToItemDir(), cube.transform.localScale,_cube.tag);
+      if (_faceType != -1)
+      {
+          Debug.Log("选中了正确的面");
+          faceType = _faceType; 
+      }
 
 
 
@@ -91,11 +90,15 @@ public class InputStrategy_Stretch : Strategy
         }
         return min;
     }
-    public int getFaceType(Vector3 inputValue,Vector3 inputScale)
+    public int getFaceType(Vector3 inputValue,Vector3 inputScale,string _tag)
     {
+        Debug.Log("选中面的Tag为：" + _tag);
+        if (_tag != "Box")
+        {
+           
+            return -1;
+        }
 
-        Debug.Log(inputValue);
-        Debug.Log(inputScale/2);
         Dictionary<int, float> tempDic = new Dictionary<int, float>();
 
         tempDic.Add(0, inputScale.x/2f);
@@ -206,13 +209,14 @@ public class InputStrategy_Stretch : Strategy
             obj = hit.collider.gameObject;
 
            // Debug.Log(hit.point - obj.transform.position);
+            return (hit.point - obj.transform.position);
         }
-        return (hit.point - obj.transform.position);
+        return new Vector3();
     }
 
     public override void doSomthing()
     {
-        Debug.Log("执行type：" + this.faceType);
+        Debug.Log("执行type：" + faceType);
     
         stretchCube();
 

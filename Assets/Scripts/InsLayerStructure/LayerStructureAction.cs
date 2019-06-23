@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
-
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LayerStructureAction : MonoBehaviour {
-
+    List<BoxData> SingleLayerBoxDataList = new List<BoxData>();
+    List<string> SingleLayerValueList = new List<string>();
+    public BoxData SingleLayerBoxData;
     public int width;
     public int len;
     public RectTransform rect_block;
@@ -92,16 +94,44 @@ public class LayerStructureAction : MonoBehaviour {
     /// </summary>
     public void onsaveOkBtn()
     {
-        string LayerStructure_len = page.lenInput.text + "";
-        string LayerStructure_width = page.widthInput.text + "";
-        string LayerStructure_height = page.heightInput.text + "";
-        string LS_rotationInput_X = page.rotationInput_X.text + "";
-        string LS_rotationInput_Y = page.rotationInput_Y.text + "";
-        string LS_rotationInput_Z = page.rotationInput_Z.text + "";
-        string LayerStructure_type = page.TypeInput.text + "";
+
 
         if (page.TypeInput.text == "")
             return;
+
+        string value = "";
+
+        foreach (GameObject g in LayerStructrueDataCache.Instance.boxItemList) {
+            
+              SingleLayerBoxData=  new BoxData(g,g.name);
+             
+              SingleLayerBoxDataList.Add(SingleLayerBoxData);
+              foreach (BoxData data in SingleLayerBoxDataList) {
+
+                  value = data.ToString() + "&";
+                  SingleLayerValueList.Add(value);
+              }
+
+
+        }
+    
+        string values="";
+        foreach (string a in SingleLayerValueList) {
+
+            values += a;
+        
+        }
+       
+    
+       
+       StreamWriter sw = new StreamWriter(LayerStructrueDataCache.FilePath + page.TypeInput.text + ".txt");
+       sw.Write(values);
+       sw.Flush();
+       sw.Close();
+
+
+      
+
 
        // ConfigFile.updateBaseboardDataInXML(int.Parse(baseboard_len), int.Parse(baseboard_width), int.Parse(baseboard_type));
         //DataCatche.onRebackFromInsBaseBoard = int.Parse(baseboard_type);

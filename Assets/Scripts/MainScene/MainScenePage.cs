@@ -11,6 +11,7 @@ public abstract class MainScenePage : PageBase {
     {
 
         dic = stackDic;
-        initPosition = new Vector3(200, 70);
+       // initPosition = new Vector3(200, 70);
+        initPosition = new Vector3(130, -25);
     }
 }

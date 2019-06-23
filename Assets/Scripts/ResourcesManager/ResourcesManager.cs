@@ -54,6 +54,9 @@ public class ResourcesManager : MonoBehaviour {
 
     public void load(string key)
     {
+        if (prefabDic.ContainsKey(key) == true) {
+            return;
+        }
         prefabDic.Add(key, Resources.Load<GameObject>(key));
 
         Debug.Log(key);
@@ -61,6 +64,9 @@ public class ResourcesManager : MonoBehaviour {
     }
     public void loadWL(string key)
     {
+        if (materialDic.ContainsKey(key) == true) {
+            return;
+        }
         materialDic.Add(key, Resources.Load<Material>(key));
     }
     public void save2SpDic(string key)
@@ -150,7 +156,7 @@ public class ResourcesManager : MonoBehaviour {
 
             // if(xl1!= null)
             //  
-            Debug.Log(xl1.InnerText.TrimEnd());
+
             resList.Add(xl1.InnerText.TrimEnd());
         }
 

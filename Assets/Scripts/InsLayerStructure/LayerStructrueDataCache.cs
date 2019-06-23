@@ -5,16 +5,18 @@ using UnityEngine;
 
 public class LayerStructrueDataCache : MonoBehaviour {
 
-    List<BoxData> boxData = new List<BoxData>();
+   List<BoxData> boxData = new List<BoxData>();
 
-    public List<GameObject> boxItemList = new List<GameObject>();
+    public  List<GameObject> boxItemList = new List<GameObject>();
 
     public static LayerStructrueDataCache Instance;
+
+    public static string FilePath;
 
     public Transform layerParent;
     public GameObject baseBoard;
 
-    public GameObject pointBox;
+    public GameObject pointBox{get;set;}
     public void onDestroyPointBox()
     {
         
@@ -46,7 +48,12 @@ public class LayerStructrueDataCache : MonoBehaviour {
             g.GetComponent<MeshRenderer>().material = ResourcesManager.materialDic["NoneOutline"];
         }
         _pointBox.GetComponent<MeshRenderer>().material = ResourcesManager.materialDic["Outline"];
-        this.pointBox = _pointBox;
+
+        if (_pointBox.tag == "Box")
+            this.pointBox = _pointBox;
+        else {
+            
+        }
     }
 
 
@@ -57,6 +64,11 @@ public class LayerStructrueDataCache : MonoBehaviour {
         Instance = this;
 
 
+    }
+    public void Start() {
+
+
+        FilePath = Application.streamingAssetsPath + "/LayerStructure/" ;
     }
 
     public void DestroyAllLayerItem() {
@@ -84,7 +96,7 @@ public class LayerStructrueDataCache : MonoBehaviour {
             value += boxData.ToString() + "&";
         }
         Debug.Log(value);
-        StreamWriter sw = new StreamWriter(Application.streamingAssetsPath+ "/LayerStructure/"+ layerName+".txt");
+        StreamWriter sw = new StreamWriter(FilePath+ layerName+".txt");
         sw.Write(value);
         sw.Flush();
         sw.Close();

@@ -15,7 +15,7 @@ public class LayerStructureInputManager : MonoBehaviour, StrategyMaster
     Vector3 p1;
     Vector3 p5;
 
-
+    public static LayerStructureInputManager Instance;
     bool isTouch;
     Ray ray;
     RaycastHit hit;
@@ -24,8 +24,13 @@ public class LayerStructureInputManager : MonoBehaviour, StrategyMaster
     public MouseBallAction mouseBall;
     public AngleBallAction mouseAngle;
     public MouseLabelAction mouseLabel;
-    
 
+
+    void Awake()
+    {
+        Instance = this;
+
+    }
     /// <summary>
     /// 声明策略
     /// </summary>
@@ -75,8 +80,19 @@ public class LayerStructureInputManager : MonoBehaviour, StrategyMaster
 
     private Strategy DeleteStategy;
     private Strategy inputStrategy_Save;
+    private List<Strategy> strategyList = new List<Strategy>();
 
 
+    public void addStrategy(Strategy _str)
+    {
+        strategyList.Add(_str);
+    
+    }
+    public void deleteStrategy(Strategy _str)
+    {
+        strategyList.Remove(_str);
+
+    }
     public Dictionary<int, Vector3> cubeFaceDic = new Dictionary<int, Vector3>();
 
 
@@ -91,6 +107,10 @@ public class LayerStructureInputManager : MonoBehaviour, StrategyMaster
     void Update()
     {
 
+        foreach (Strategy str in strategyList)
+        {
+            str.doSomthing();
+        }
         if (strechStrategy != null)
         {
             strechStrategy.doSomthing();
@@ -153,16 +173,19 @@ public class LayerStructureInputManager : MonoBehaviour, StrategyMaster
             if (isTouch == true)
             {
 
-
+               // LayerStructrueDataCache.Instance.onSelect(Cube);
                 if (hit.collider.tag == "Box")
                 {
                     //     hit.collider.gameObject.transform.position += dirTypeObtain * Time.deltaTime * 30;
                     Cube = hit.collider.gameObject;
                     //hit检测碰撞到的物体（tag标记为Box）,Cube
-                   // LayerStructrueDataCache.Instance.pointBox = Cube;
+                    // LayerStructrueDataCache.Instance.pointBox = Cube;
 
                     LayerStructrueDataCache.Instance.onSelect(Cube);
 
+                }
+                else {
+                    
                 }
             }
         }
@@ -213,15 +236,14 @@ public class LayerStructureInputManager : MonoBehaviour, StrategyMaster
                 {
                     if (LayerStructureAction.Instance.ButtonOk == true)
                     {
-                        //  Debug.Log()
-                        //    this.strategy = new LayerMoveStrategy(posBallfrom, posBallto, frameTime2);
-                        this.strategyMagnetism = new LayerMagnetismStrategy(posBallfrom, posBallto, frameTime2);
+                       //画线+夹角
+                       // this.strategyMagnetism = new LayerMagnetismStrategy(posBallfrom, posBallto, frameTime2);
 
-                        //   frameTime2 = 0;
+                       
                     }
                     else
                     {
-                        this.strategy = new LayerMoveStrategy(posBallfrom, posBallto, frameTime2);
+                      //  this.strategy = new LayerMoveStrategy(posBallfrom, posBallto, frameTime2);
                     }
                 }
 
@@ -362,7 +384,7 @@ public class LayerStructureInputManager : MonoBehaviour, StrategyMaster
         int dirTypeInt = getMatchDirType(dirList);
         Vector3 dirTypes = LayerStructureInputManager.dirType[dirTypeInt];
 
-        Debug.Log("方向值：" + dirTypeInt);
+
         return dirTypes;
     }
 
@@ -438,4 +460,7 @@ public class LayerStructureInputManager : MonoBehaviour, StrategyMaster
 
         }
     }
+
+
+
 }
